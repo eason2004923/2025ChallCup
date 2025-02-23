@@ -4,10 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue + TS</title>
+    <title>二期辅助诊断系统</title>
   </head>
+  <script type="module" src="/src/main.ts"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <script>
+    // 测试 vis 是否加载成功
+    if (window.vis) {
+          console.log("vis.js loaded successfully!");
+          const nodes = new window.vis.DataSet([
+              { id: 1, label: "Node 1" },
+              { id: 2, label: "Node 2" }
+          ]);
+          console.log(nodes);
+      } else {
+          console.error("vis.js failed to load");
+      }
+  </script>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+
   </body>
 </html>

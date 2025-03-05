@@ -22,14 +22,20 @@
     height: 25rem;
   }
   
-  .container {
+  .container_1 {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px; /* 按钮和输入框之间的间距 */
     margin-top: 10px;
   }
-  
+  .container_2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* 按钮和输入框之间的间距 */
+    margin-top: 10px;
+  }
   #test{
     padding: 10px 20px;
     border: none;

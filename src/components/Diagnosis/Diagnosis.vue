@@ -5,7 +5,20 @@
       </div>
   
       <!-- 网络图的容器 -->
-      <div id="mynetwork"></div>
+      <div class="network">
+        <h2>Network Graph</h2>
+        <div class="content">
+          <div class="content1">
+             <div id="mynetwork"></div>
+          </div>
+          <div class="content2">
+            <div>
+              <h3>Node Information</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      
   
       <!-- 测试按钮和文件上传输入 -->
       <div class="container">
@@ -19,11 +32,12 @@
   
       <!-- 页面底部信息 -->
       <div class="footer">
-        <p><a href="/" title="首页">Index</a></p>
+        <div class="footer-link">
+          <p><a href="/" title="首页">Index</a></p>
+          <p><a href="/Description" title="辅助诊断AI系统简介">Description</a></p>
+        </div>
         <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
-        <p>Contact us: <a href="mailto:support@yourcompany.com">support@zstu.edu.cn</a></p>
-        <p><a href="/privacy-policy" target="_blank">Privacy Policy</a></p>
-        <p><a href="/terms-of-service" target="_blank">Terms of Service</a></p>
+        <p>Contact us: <a href="https://www.zstu.edu.cn/">support@zstu.edu.cn</a></p>
       </div>
     </div>
   </template>

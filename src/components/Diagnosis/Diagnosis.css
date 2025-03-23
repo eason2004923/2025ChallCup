@@ -1,25 +1,63 @@
 .data-test-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 110vh;
+}
+
+.top-bar {
+  background: linear-gradient(to bottom, rgba(133, 168, 255, 0.3), rgba(255, 255, 255, 0));
+  color: #3a3a3a;
+  padding: 10px 20px;
+  text-align: center;
+  justify-content: center;
+  margin-left: -20px;
+  width: 100%;
+}
+  .content {
+    background-color: #d0d0d0;
+    flex: 1;
+    max-width: 100%;
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .content1 {
+    flex: 4;
     display: flex;
     flex-direction: column;
-    min-height: 110vh;
+    justify-content: center;
+    align-items: center;
   }
-  
-  .top-bar {
-    background-color: #333;
-    color: white;
+  .content2 {
+    flex: 1;
+    display: flex;
+    margin-right: 5rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #ebfffd;
     padding: 10px 20px;
-    text-align: center;
+    height: 30rem;
   }
-  
+
+.network h2{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
   #mynetwork {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     background-color: #ebfffd;
-    margin: 20px 50px;
+    margin: 10px 30px;
     padding: 10px 20px;
-    height: 25rem;
+    height: 30rem;
   }
   
   .container_1 {
@@ -92,13 +130,23 @@
   }
   
   .footer {
-    background-color: #3a3a3a;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1),rgba(133, 168, 255, 0.3));
     padding: 20px;
     text-align: center;
     font-size: 14px;
-    color: #ffffff;
+    color: #3a3a3a;
     margin-top: 20px;
     border-top: 1px solid #eaeaea;
+  }
+
+  .footer-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-link p a{
+    margin: 1rem;
   }
   
   .footer p {

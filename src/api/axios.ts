@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Axios = axios.create({
   // baseURL: 'http://localhost:8081', // 设置API的基础URL
-  baseURL: 'http://121.43.33.200:5090', // 设置API的基础URL
+  baseURL: 'http://118.31.107.96:6090', // 设置API的基础URL
   timeout: 10000000000000000000000000000000000000000000000000000000000000000000000000000, // 请求超时时间
 
 });

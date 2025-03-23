@@ -16,13 +16,13 @@ export const FileApi={
     }
   },
   //step1_挑选基因
-  selectGene:async(fileName:string,uid:string)=>{
+  selectGene:async(fileName:string,uid:string,num:string)=>{
     //判断文件名是否存在
     if(!fileName){
       return Promise.reject(new Error('fileName is required'));
     }
     try{
-      return await Axios.get('/M2STGAT/selectGene',{params:{fileName:fileName,uid:uid}})
+      return await Axios.get('/M2STGAT/selectGene',{params:{fileName:fileName,uid:uid,num:num}})
     }catch(error){
       console.log("selectGene error:",error)
     }
@@ -39,7 +39,7 @@ export const FileApi={
       console.log("createGeneMap error:",error)
     }
   },
-  //step3_生成基因图谱
+  //step3_邻接矩阵转化
   createAdjMatrix:async(fileName:string,uid:string)=>{
     //判断文件名是否存在
     if(!fileName){
@@ -48,10 +48,10 @@ export const FileApi={
     try{
       return await Axios.get('/M2STGAT/createAdjMatrix',{params:{fileName:fileName,uid:uid}})
     }catch(error){
-      console.log("createGeneMap error:",error)
+      console.log("createAdjMatrix error:",error)
     }
   },
-  //step4_获取邻接表
+  //step4_获取PFN邻接表
   getFile:async(fileName:string,uid:string)=>{
     //判断文件名是否存在
     if(!fileName){
@@ -59,7 +59,8 @@ export const FileApi={
     }
     try{
       return await Axios.get('/M2STGAT/getFile',{params:{fileName:fileName,uid:uid}})
-    }catch{
+    }catch(error){
+      console.log("getFile error:",error)
     }
   },
   connectSSE:async(uid:string)=>{

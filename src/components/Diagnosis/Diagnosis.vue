@@ -92,7 +92,7 @@ import { ElMessage } from 'element-plus';
       processingGene.value=true//设置按钮为激活状态
       console.log('selectGene for file:',fileName.value)
       //step1_selectGene
-      const res_step1= await FileApi.selectGene(fileName.value,uid.value)
+      const res_step1= await FileApi.selectGene(fileName.value,uid.value,'660')
       console.log('selectGene success,res:',res_step1)
       //step2_createGeneMap
       let lastDotIndex: number = fileName.value.lastIndexOf('.');
@@ -149,7 +149,7 @@ import { ElMessage } from 'element-plus';
     }finally{
       gettingChart.value=false
     }  
-  } 
+  }
   window.onload = function() {
       const nodes = new DataSet([
           {id: 1, label: 'Node 1'},
@@ -164,7 +164,6 @@ import { ElMessage } from 'element-plus';
           {from: 2, to: 4},
           {from: 2, to: 5}
       ])
-  
       const container = document.getElementById('mynetwork')
       const data = {
           nodes:nodes,
@@ -216,7 +215,7 @@ import { ElMessage } from 'element-plus';
       };
   
       
-      document.getElementById('csvUpload')?.addEventListener('change', function(event) {
+    document.getElementById('csvUpload')?.addEventListener('change', function(event) {
     // 类型断言：告诉 TypeScript event.target 实际上是 HTMLInputElement 类型
     const fileInput = event.target as HTMLInputElement;
     const fileName = fileInput.files?.[0] ? fileInput.files[0].name : '未选择文件';
@@ -249,21 +248,50 @@ import { ElMessage } from 'element-plus';
     } else {
         console.log('file not exist');
     }
-});
+  });
   
-      //创建一个网络图
-      const network = new Network(container,data,options)
-      document.getElementById('test')?.addEventListener('click', function() {
-        const tool = nodes.get(6);
-        if (!tool) {
-            nodes.add({id: 6, label: 'Node 6'});
-            edges.add({from: 1, to: 6});
-        } else {
-            alert('error');
-        }
-    });
+  //创建一个网络图
+  const network = new Network(container,data,options)
+  document.getElementById('test')?.addEventListener('click', function() {
+    const tool = nodes.get(6);
+    if (!tool) {
+        nodes.add({id: 6, label: 'Node 6'});
+        edges.add({from: 1, to: 6});
+    } else {
+        alert('error');
+    }
+  });
 };
+let eventSource:any//SSE实例
+//连接SSE
+const ConnectSSE = () => {
+  CloseSSE();
+  uid.value = '2025'
+  eventSource = new EventSource(`http://120.26.117.60:5090/sse/createSse?uid=${uid.value}`);
+  eventSource.onopen = function () {
+    console.log('SSE链接成功,uid:', uid.value);
+  }
+  eventSource.onmessage = function (event:any) {
+    if (event.data) {
+      console.log(event.data)
+    }
+  }
+  eventSource.onerror = function (error:any) {
+    console.error('SSE发生错误:', error, 'readyState:', eventSource.readyState);
+    // 可以在这里添加重试逻辑或其他错误处理
+  };
+}
+const CloseSSE = () => {
+  if (eventSource) {
+    eventSource.close()
+    console.log('SSE connection closed.');
+    eventSource = null; // 清除引用
+  }
+};
+
 onMounted(()=>{
-  FileApi.connectSSE('2025');
+  // FileApi.connectSSE('2025');
+  //自动连接SSE
+  ConnectSSE();
 })
 </script>

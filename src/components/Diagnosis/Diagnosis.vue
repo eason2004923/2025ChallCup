@@ -19,30 +19,54 @@
         </div>
       </div>
       
+      <div class="maincontent">
+
+      <!-- 测试与文件实例 -->
+       <div class="testcontent">
+        <h2>Test and File Example</h2>
+          <div class="file-upload-container">
+            <input type="file" id="csvUpload" class="file-upload-input">
+            <label for="csvUpload" class="file-upload-button">上传文件</label>
+            <span class="file-name">未选择文件</span>
+          </div>
+        <el-dropdown class="dropdown" trigger="click">
+           <el-button type="primary">
+              Test File<el-icon class="el-icon--right"><arrow-down /></el-icon>
+           </el-button>
+           <template #dropdown>
+               <el-dropdown-menu>
+                <el-dropdown-item @click="loadFile('FPN-M6.csv')">FPN-M6.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:002.csv')">TestFile:002.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:003.csv')">TestFile:003.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:004.csv')">TestFile:004.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:005.csv')">TestFile:005.csv</el-dropdown-item>
+            </el-dropdown-menu>
+           </template>
+        </el-dropdown>
+       </div>
   
-      <!-- 测试按钮和文件上传输入 -->
-      <div class="container_1">
-        <button id="test" >Test</button>
+      <!-- 文件上传输入 -->
+       <div class="container">
+        <h2>File Upload and Processing Data</h2>
+        <div class="container_1">
+       
         <div>
         <el-button type="primary" size="large" @click="openUpload('.csv')" v-loading="uploading">upload</el-button>
         <span>{{ fileName }}</span>
-        </div>
-        <div class="file-upload-container">
-          <input type="file" id="csvUpload" class="file-upload-input">
-          <label for="csvUpload" class="file-upload-button">上传文件</label>
-          <span class="file-name">未选择文件</span>
         </div>
       </div>
       <!-- 绘制邻接表 -->
       <div class="container_2">
         <div>
           <!-- step1处理基因文件 -->
-          <el-button type="primary" @click="processGene" v-loading="processingGene">step1(processGene)</el-button>
+          <el-button class="btn" type="primary" @click="processGene" v-loading="processingGene">step1(processGene)</el-button>
           <!-- step2生成邻接矩阵 -->
-          <el-button type="primary" @click="getChart" v-loading="gettingChart">step2(getChart)</el-button>
+          <el-button class="btn" type="primary" @click="getChart" v-loading="gettingChart">step2(getChart)</el-button>
           <!-- 获取PFN邻接表 -->
-          <el-button type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
+          <el-button class="btn" type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
         </div>
+      </div>
+       </div>
       </div>
 
       <div class="introduction">
@@ -81,7 +105,7 @@
   import {onMounted, ref} from 'vue';
   import uploaDia from './uploaDia.vue';
   import { FileApi } from '../../api/Diagnosis/Diagnosis';
-  import { ElMessage } from 'Element-plus';
+  import { ElMessage } from 'element-plus';
   const uid=ref('2025')
   const fileName=ref('未选择文件')//暂存上传的文件名
   const uploading=ref(false)//upload状态工具
@@ -90,6 +114,23 @@
   const gettingPFNChart=ref(false)//getChart状态工具
   const progressBar=ref('0')//进度条工具
   const uploadRef=ref()
+
+
+// 定义全局的 nodes 和 edges
+const nodes =new DataSet([
+          {id: 1, label: 'Node 1'},
+          {id: 2, label: 'Node 2'},
+          {id: 3, label: 'Node 3'},
+          {id: 4, label: 'Node 4'},
+          {id: 5, label: 'Node 5'}
+      ])
+const edges =new DataSet([
+          {from: 1, to: 3},
+          {from: 1, to: 2},
+          {from: 2, to: 4},
+          {from: 2, to: 5}
+      ])
+
   //打开upload弹窗
   const openUpload=(tool:string)=>{
 
@@ -118,7 +159,7 @@
       processingGene.value=true//设置按钮为激活状态
       console.log('selectGene for file:',fileName.value)
       //step1_selectGene
-      const res_step1= await FileApi.selectGene(fileName.value,uid.value)
+      const res_step1= await FileApi.selectGene(fileName.value,uid.value,'660')
       console.log('selectGene success,res:',res_step1)
       //step2_createGeneMap
       let lastDotIndex: number = fileName.value.lastIndexOf('.');
@@ -175,22 +216,56 @@
     }finally{
       gettingChart.value=false
     }  
-  } 
+  }
+
+  //加载文件
+  const loadFile = async (fileName: string) => {
+  try {
+    console.log(`Loading file: ${fileName}`);
+    // 假设文件存储在服务器路径或本地路径
+    // const filePath = `http://localhost:5100/api/files/${fileName}`;
+    const filePath = `E:/ChallCup-2/${fileName}`;
+    const response = await fetch(filePath);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load file: ${fileName}`);
+    }
+
+    const csvData = await response.text();
+    console.log("Raw CSV Data:", csvData);
+
+    // 解析 CSV 数据并更新网络图
+    const linesArray = csvData.split('\n').map(line => line.trim()).filter(line => line);
+    console.log("Parsed CSV Lines:", linesArray);
+
+    linesArray.forEach((element, index) => {
+      const mediate = element.split(',');
+      if (mediate.length >= 2) {
+        const fromNode = mediate[0].trim();
+        const toNode = mediate[1].trim();
+
+        if (!nodes.get(fromNode)) {
+          nodes.add({ id: fromNode, label: `Node ${fromNode}` });
+        }
+        if (!nodes.get(toNode)) {
+          nodes.add({ id: toNode, label: `Node ${toNode}` });
+        }
+        edges.add({ from: fromNode, to: toNode });
+      } else {
+        console.warn(`Invalid line format at index ${index}: ${element}`);
+      }
+    });
+
+    console.log('Network graph updated successfully.');
+    ElMessage.success(`文件加载成功: ${fileName}`);
+  } catch (error) {
+    console.error(`Error loading file`);
+    ElMessage.error(`加载文件失败: ${fileName}`);
+  }
+};
+
   window.onload = function() {
-      const nodes = new DataSet([
-          {id: 1, label: 'Node 1'},
-          {id: 2, label: 'Node 2'},
-          {id: 3, label: 'Node 3'},
-          {id: 4, label: 'Node 4'},
-          {id: 5, label: 'Node 5'}
-      ])
-      const edges = new DataSet([
-          {from: 1, to: 3},
-          {from: 1, to: 2},
-          {from: 2, to: 4},
-          {from: 2, to: 5}
-      ])
-  
+
       const container = document.getElementById('mynetwork')
       const data = {
           nodes:nodes,
@@ -242,7 +317,7 @@
       };
   
       
-      document.getElementById('csvUpload')?.addEventListener('change', function(event) {
+    document.getElementById('csvUpload')?.addEventListener('change', function(event) {
     // 类型断言：告诉 TypeScript event.target 实际上是 HTMLInputElement 类型
     const fileInput = event.target as HTMLInputElement;
     const fileName = fileInput.files?.[0] ? fileInput.files[0].name : '未选择文件';
@@ -275,21 +350,50 @@
     } else {
         console.log('file not exist');
     }
-});
+  });
   
-      //创建一个网络图
-      const network = new Network(container, data, options)
-      document.getElementById('test')?.addEventListener('click', function() {
-        const tool = nodes.get(6);
-        if (!tool) {
-            nodes.add({id: 6, label: 'Node 6'});
-            edges.add({from: 1, to: 6});
-        } else {
-            alert('error');
-        }
-    });
+  //创建一个网络图
+  const network = new Network(container,data,options)
+  document.getElementById('test')?.addEventListener('click', function() {
+    const tool = nodes.get(6);
+    if (!tool) {
+        nodes.add({id: 6, label: 'Node 6'});
+        edges.add({from: 1, to: 6});
+    } else {
+        alert('error');
+    }
+  });
 };
+let eventSource:any//SSE实例
+//连接SSE
+const ConnectSSE = () => {
+  CloseSSE();
+  uid.value = '2025'
+  eventSource = new EventSource(`http://120.26.117.60:5090/sse/createSse?uid=${uid.value}`);
+  eventSource.onopen = function () {
+    console.log('SSE链接成功,uid:', uid.value);
+  }
+  eventSource.onmessage = function (event:any) {
+    if (event.data) {
+      console.log(event.data)
+    }
+  }
+  eventSource.onerror = function (error:any) {
+    console.error('SSE发生错误:', error, 'readyState:', eventSource.readyState);
+    // 可以在这里添加重试逻辑或其他错误处理
+  };
+}
+const CloseSSE = () => {
+  if (eventSource) {
+    eventSource.close()
+    console.log('SSE connection closed.');
+    eventSource = null; // 清除引用
+  }
+};
+
 onMounted(()=>{
-  FileApi.connectSSE('2025');
+  // FileApi.connectSSE('2025');
+  //自动连接SSE
+  ConnectSSE();
 })
 </script>

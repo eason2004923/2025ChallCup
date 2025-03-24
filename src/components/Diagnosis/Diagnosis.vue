@@ -44,6 +44,17 @@
           <el-button type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
         </div>
       </div>
+
+      <div class="introduction">
+    <nav>
+      <ul>
+        <li>
+          <el-card shadow="hover" style="padding-left: 1rem; padding-right: 1rem;"><a href="/" title="前往数据测试页面">首页</a></el-card>
+          <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">系统简介</a></el-card>
+        </li>
+      </ul>
+    </nav>
+  </div>
       <!-- 页面底部信息 -->
       <div class="footer">
         <div class="footer-link">
@@ -61,11 +72,12 @@
   
 <style scoped>
   @import '../Diagnosis/Diagnosis.css';
+  @import url("//cdn.jsdelivr.net/npm/element-plus/dist/index.css");
 </style>
 
 
   <script setup lang="ts">
-  import { DataSet,Network } from 'vis';
+  import { DataSet, Network } from 'vis';
   import {onMounted, ref} from 'vue';
   import uploaDia from './uploaDia.vue';
   import { FileApi } from '../../api/Diagnosis/Diagnosis';
@@ -125,11 +137,11 @@
   //获取邻接矩阵
   const getChart= async ()=>{
     //检查进度(proccessGene是否完成)
-    if(progressBar.value<'50'){
-      ElMessage.error('请先完成step1')
-      console.log('请先完成step1')
-      return ;
-    }
+    // if(progressBar.value<'50'){
+    //   ElMessage.error('请先完成step1')
+    //   console.log('请先完成step1')
+    //   return ;
+    // }
     try{
       console.log('gettingChart...')
       gettingChart.value=true
@@ -146,11 +158,11 @@
   //获取PFN邻接矩阵
   const getPFNChart=async()=>{
     //检查进度(proccessGene是否完成)
-    if(progressBar.value<'50'){
-      ElMessage.error('请先完成step1')
-      console.log('请先完成step1')
-      return ;
-    }
+    // if(progressBar.value<'50'){
+    //   ElMessage.error('请先完成step1')
+    //   console.log('请先完成step1')
+    //   return ;
+    // }
     try{
       console.log('gettingPFNChart...')
       gettingChart.value=true
@@ -266,7 +278,7 @@
 });
   
       //创建一个网络图
-      const network = new Network(container,data,options)
+      const network = new Network(container, data, options)
       document.getElementById('test')?.addEventListener('click', function() {
         const tool = nodes.get(6);
         if (!tool) {

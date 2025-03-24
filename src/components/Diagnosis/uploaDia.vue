@@ -26,8 +26,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Plus } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
+import { Plus } from '@Element-plus/icons-vue'
+import { ElMessage } from 'Element-plus'
 import { FileApi } from '../../api/Diagnosis/Diagnosis';
 
 const fileName = ref() //记录文件名

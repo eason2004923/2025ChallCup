@@ -1,5 +1,4 @@
 import Axios from '../axios';
-import axios from 'axios';
 export const FileApi={
   //上传文件
   uploadFile:async(fileData:any)=>{
@@ -51,14 +50,14 @@ export const FileApi={
       console.log("createAdjMatrix error:",error)
     }
   },
-  //step4_获取PFN邻接表
-  getFile:async(fileName:string,uid:string)=>{
+  //step4_获取文件
+  getFile:async(fileName:string)=>{
     //判断文件名是否存在
     if(!fileName){
       return Promise.reject(new Error('fileName is required'));
     }
     try{
-      return await Axios.get('/M2STGAT/getFile',{params:{fileName:fileName,uid:uid}})
+      return await Axios.get('/M2STGAT/getFile',{params:{fileName:fileName}})
     }catch(error){
       console.log("getFile error:",error)
     }

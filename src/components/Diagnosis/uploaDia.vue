@@ -33,7 +33,7 @@ import { FileApi } from '../../api/Diagnosis/Diagnosis';
 const fileName = ref() //记录文件名
 const fileMediate = ref() //记录文件
 const formulaStyle = ref()
-const filePath = ref()
+// const filePath = ref()
 const emit = defineEmits<{
   (event: 'getFile', fileName: string): void,
   (event: 'closeDialog'): void
@@ -47,7 +47,8 @@ const open = (FormuStyle: string) => {
 }
 defineExpose({ open })
 //获取绝对路径
-const handleSuccess = (response: any, file: any, fileList: any[]) => {
+// const handleSuccess = (response: any, file: any, fileList: any[]) => {
+const handleSuccess = (response: any) => {
   if (response.success) {
     // filePath.value = response.data.path
     // console.log('文件路径:', filePath)
@@ -66,9 +67,11 @@ const handleClose = () => {
 
 //获取文件
 const fileList = ref<any[]>([])
+  // @ts-ignore
 const handleChange = (file: any, fileList: any[]) => {
   console.log(fileList)
   if (fileList.length) {
+    
     const currentFile = fileList[0];
     if (judegType(currentFile)) {
       fileName.value = currentFile.name; // 获取文件名

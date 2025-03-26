@@ -106,7 +106,7 @@
       processingGene.value=true//设置按钮为激活状态
       console.log('selectGene for file:',fileName.value)
       //step1_selectGene
-      const res_step1= await FileApi.selectGene(fileName.value,uid.value,'660')
+      const res_step1= await FileApi.selectGene(fileName.value,uid.value,'100')
       console.log('selectGene success,res:',res_step1)
       //step2_createGeneMap
       let lastDotIndex: number = fileName.value.lastIndexOf('.');
@@ -125,11 +125,11 @@
   //获取邻接矩阵
   const getChart= async ()=>{
     //检查进度(proccessGene是否完成)
-    if(progressBar.value<'50'){
-      ElMessage.error('请先完成step1')
-      console.log('请先完成step1')
-      return ;
-    }
+    // if(progressBar.value<'50'){
+    //   ElMessage.error('请先完成step1')
+    //   console.log('请先完成step1')
+    //   return ;
+    // }
     try{
       console.log('gettingChart...')
       gettingChart.value=true
@@ -146,15 +146,15 @@
   //获取PFN邻接矩阵
   const getPFNChart=async()=>{
     //检查进度(proccessGene是否完成)
-    if(progressBar.value<'50'){
-      ElMessage.error('请先完成step1')
-      console.log('请先完成step1')
-      return ;
-    }
+    // if(progressBar.value<'50'){
+    //   ElMessage.error('请先完成step1')
+    //   console.log('请先完成step1')
+    //   return ;
+    // }
     try{
       console.log('gettingPFNChart...')
       gettingChart.value=true
-      const res=await FileApi.getFile('PPMI-data_M6_1000_PFN.csv',uid.value)
+      const res=await FileApi.getFile('Data_Correlation_adj_matrix.csv')
       console.log('success getPFNChart,res:',res)
       progressBar.value='100'
     }catch(error){
@@ -265,6 +265,7 @@
   });
   
   //创建一个网络图
+  // @ts-ignore
   const network = new Network(container,data,options)
   document.getElementById('test')?.addEventListener('click', function() {
     const tool = nodes.get(6);
@@ -281,7 +282,7 @@ let eventSource:any//SSE实例
 const ConnectSSE = () => {
   CloseSSE();
   uid.value = '2025'
-  eventSource = new EventSource(`http://120.26.117.60:5090/sse/createSse?uid=${uid.value}`);
+  eventSource = new EventSource(`http://118.31.107.96:6090/sse/createSse?uid=${uid.value}`);
   eventSource.onopen = function () {
     console.log('SSE链接成功,uid:', uid.value);
   }

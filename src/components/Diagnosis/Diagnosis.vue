@@ -106,6 +106,7 @@
   import uploaDia from './uploaDia.vue';
   import { FileApi } from '../../api/Diagnosis/Diagnosis';
   import { ElMessage } from 'element-plus';
+  // import { da } from 'element-plus/es/locales.mjs';
   const uid=ref('2025')
   const fileName=ref('未选择文件')//暂存上传的文件名
   const uploading=ref(false)//upload状态工具
@@ -205,16 +206,23 @@ const edges =new DataSet([
     //   return ;
     // }
     try{
-      console.log('gettingPFNChart...')
-      gettingChart.value=true
-      const res=await FileApi.getFile('Data_Correlation_adj_matrix.csv')
+      gettingPFNChart.value=true
+      let lastDotIndex: number = fileName.value.lastIndexOf('.');
+      let newFilename: string = fileName.value.slice(0, lastDotIndex) + '_1000_PFN' + fileName.value.substring(lastDotIndex);
+      console.log('gettingPFNChart for:',newFilename)
+      const res:any=await FileApi.getFile(newFilename)
       console.log('success getPFNChart,res:',res)
+      console.log('success res_data:',res.data)
+      ElMessage.success(`成功获取PFN表!
+                        正在绘制图谱~`)
+      await drawChart(res.data);
+      ElMessage.success(`成功绘制图谱`)
       progressBar.value='100'
     }catch(error){
       progressBar.value='50'
       ElMessage.error(`gettingPFNChart error:${error}`)
     }finally{
-      gettingChart.value=false
+      gettingPFNChart.value=false
     }  
   }
 
@@ -263,7 +271,42 @@ const edges =new DataSet([
     ElMessage.error(`加载文件失败: ${fileName}`);
   }
 };
-
+const drawChart=(data:string)=>{
+  if (data) {
+    console.log('csvData:',data)
+//测试工具   
+//     let tool:string=`"","row","col","weight"
+// "1","ENSG00000211951.2","ENSG00000223350.2",0.998618526389936
+// "2","ENSG00000128849.10","ENSG00000157103.11",0.998517841438376
+// "3","ENSG00000186487.19","ENSG00000151067.21",0.998324825961499
+// "4","ENSG00000256654.3","ENSG00000128849.10",0.998252771390811
+// "5","ENSG00000183454.16","ENSG00000187720.14",0.998227327388466
+// "6","ENSG00000078549.14","ENSG00000138162.18",0.998208034887389
+// "7","ENSG00000174640.13","ENSG00000144730.17",0.998175096003787
+// "8","ENSG00000140538.16","ENSG00000151067.21",0.998149026302215
+// "9","ENSG00000157103.11","ENSG00000184347.14",0.998111040925496
+// "10","ENSG00000128849.10","ENSG00000184347.14",0.99809077834655`
+//     console.log(tool)
+    // const linesArray = tool.split(/\r?\n/).map(line => line.replace(/"/g, '')).slice(1);
+    
+    
+    //处理res.data数据，生成linesArray点边数组
+    const linesArray = data.split(/\r?\n/).map(line => line.replace(/"/g, '')).slice(1);
+    console.log(linesArray);
+    console.log(linesArray.length);
+    //添加点边信息
+    linesArray.forEach(element => {
+        const mediate = element.split(',');
+        if (!nodes.get(mediate[1])) {
+            nodes.add({id: mediate[1], label: ''});
+        }
+        if (!nodes.get(mediate[2])) {
+            nodes.add({id: mediate[2], label: ''});
+        }
+        edges.add({from: mediate[1], to: mediate[2]});
+    });
+  }
+}
   window.onload = function() {
 
       const container = document.getElementById('mynetwork')
@@ -370,7 +413,7 @@ let eventSource:any//SSE实例
 const ConnectSSE = () => {
   CloseSSE();
   uid.value = '2025'
-  eventSource = new EventSource(`http://118.31.107.96:6090/sse/createSse?uid=${uid.value}`);
+  eventSource = new EventSource(`http://47.98.97.32:6090/sse/createSse?uid=${uid.value}`);
   eventSource.onopen = function () {
     console.log('SSE链接成功,uid:', uid.value);
   }

@@ -19,31 +19,66 @@
         </div>
       </div>
       
+      <div class="maincontent">
+
+      <!-- 测试与文件实例 -->
+       <div class="testcontent">
+        <h2>Test and File Example</h2>
+          <div class="file-upload-container">
+            <input type="file" id="csvUpload" class="file-upload-input">
+            <label for="csvUpload" class="file-upload-button">上传文件</label>
+            <span class="file-name">未选择文件</span>
+          </div>
+        <el-dropdown class="dropdown" trigger="click">
+           <el-button type="primary">
+              Test File<el-icon class="el-icon--right"><arrow-down /></el-icon>
+           </el-button>
+           <template #dropdown>
+               <el-dropdown-menu>
+                <el-dropdown-item @click="loadFile('FPN-M6.csv')">FPN-M6.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:002.csv')">TestFile:002.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:003.csv')">TestFile:003.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:004.csv')">TestFile:004.csv</el-dropdown-item>
+                <el-dropdown-item @click="loadFile('TestFile:005.csv')">TestFile:005.csv</el-dropdown-item>
+            </el-dropdown-menu>
+           </template>
+        </el-dropdown>
+       </div>
   
-      <!-- 测试按钮和文件上传输入 -->
-      <div class="container_1">
-        <button id="test" >Test</button>
+      <!-- 文件上传输入 -->
+       <div class="container">
+        <h2>File Upload and Processing Data</h2>
+        <div class="container_1">
+       
         <div>
         <el-button type="primary" size="large" @click="openUpload('.csv')" v-loading="uploading">upload</el-button>
         <span>{{ fileName }}</span>
-        </div>
-        <div class="file-upload-container">
-          <input type="file" id="csvUpload" class="file-upload-input">
-          <label for="csvUpload" class="file-upload-button">上传文件</label>
-          <span class="file-name">未选择文件</span>
         </div>
       </div>
       <!-- 绘制邻接表 -->
       <div class="container_2">
         <div>
           <!-- step1处理基因文件 -->
-          <el-button type="primary" @click="processGene" v-loading="processingGene">step1(processGene)</el-button>
+          <el-button class="btn" type="primary" @click="processGene" v-loading="processingGene">step1(processGene)</el-button>
           <!-- step2生成邻接矩阵 -->
-          <el-button type="primary" @click="getChart" v-loading="gettingChart">step2(getChart)</el-button>
+          <el-button class="btn" type="primary" @click="getChart" v-loading="gettingChart">step2(getChart)</el-button>
           <!-- 获取PFN邻接表 -->
-          <el-button type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
+          <el-button class="btn" type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
         </div>
       </div>
+       </div>
+      </div>
+
+      <div class="introduction">
+    <nav>
+      <ul>
+        <li>
+          <el-card shadow="hover" style="padding-left: 1rem; padding-right: 1rem;"><a href="/" title="前往数据测试页面">首页</a></el-card>
+          <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">系统简介</a></el-card>
+        </li>
+      </ul>
+    </nav>
+  </div>
       <!-- 页面底部信息 -->
       <div class="footer">
         <div class="footer-link">
@@ -61,11 +96,12 @@
   
 <style scoped>
   @import '../Diagnosis/Diagnosis.css';
+  @import url("//cdn.jsdelivr.net/npm/element-plus/dist/index.css");
 </style>
 
 
   <script setup lang="ts">
-  import { DataSet,Network } from 'vis';
+  import { DataSet, Network } from 'vis';
   import {onMounted, ref} from 'vue';
   import uploaDia from './uploaDia.vue';
   import { FileApi } from '../../api/Diagnosis/Diagnosis';
@@ -78,6 +114,23 @@
   const gettingPFNChart=ref(false)//getChart状态工具
   const progressBar=ref('0')//进度条工具
   const uploadRef=ref()
+
+
+// 定义全局的 nodes 和 edges
+const nodes =new DataSet([
+          {id: 1, label: 'Node 1'},
+          {id: 2, label: 'Node 2'},
+          {id: 3, label: 'Node 3'},
+          {id: 4, label: 'Node 4'},
+          {id: 5, label: 'Node 5'}
+      ])
+const edges =new DataSet([
+          {from: 1, to: 3},
+          {from: 1, to: 2},
+          {from: 2, to: 4},
+          {from: 2, to: 5}
+      ])
+
   //打开upload弹窗
   const openUpload=(tool:string)=>{
 
@@ -164,20 +217,55 @@
       gettingChart.value=false
     }  
   }
+
+  //加载文件
+  const loadFile = async (fileName: string) => {
+  try {
+    console.log(`Loading file: ${fileName}`);
+    // 假设文件存储在服务器路径或本地路径
+    // const filePath = `http://localhost:5100/api/files/${fileName}`;
+    const filePath = `E:/ChallCup-2/${fileName}`;
+    const response = await fetch(filePath);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load file: ${fileName}`);
+    }
+
+    const csvData = await response.text();
+    console.log("Raw CSV Data:", csvData);
+
+    // 解析 CSV 数据并更新网络图
+    const linesArray = csvData.split('\n').map(line => line.trim()).filter(line => line);
+    console.log("Parsed CSV Lines:", linesArray);
+
+    linesArray.forEach((element, index) => {
+      const mediate = element.split(',');
+      if (mediate.length >= 2) {
+        const fromNode = mediate[0].trim();
+        const toNode = mediate[1].trim();
+
+        if (!nodes.get(fromNode)) {
+          nodes.add({ id: fromNode, label: `Node ${fromNode}` });
+        }
+        if (!nodes.get(toNode)) {
+          nodes.add({ id: toNode, label: `Node ${toNode}` });
+        }
+        edges.add({ from: fromNode, to: toNode });
+      } else {
+        console.warn(`Invalid line format at index ${index}: ${element}`);
+      }
+    });
+
+    console.log('Network graph updated successfully.');
+    ElMessage.success(`文件加载成功: ${fileName}`);
+  } catch (error) {
+    console.error(`Error loading file`);
+    ElMessage.error(`加载文件失败: ${fileName}`);
+  }
+};
+
   window.onload = function() {
-      const nodes = new DataSet([
-          {id: 1, label: 'Node 1'},
-          {id: 2, label: 'Node 2'},
-          {id: 3, label: 'Node 3'},
-          {id: 4, label: 'Node 4'},
-          {id: 5, label: 'Node 5'}
-      ])
-      const edges = new DataSet([
-          {from: 1, to: 3},
-          {from: 1, to: 2},
-          {from: 2, to: 4},
-          {from: 2, to: 5}
-      ])
+
       const container = document.getElementById('mynetwork')
       const data = {
           nodes:nodes,

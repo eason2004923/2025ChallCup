@@ -1,249 +1,277 @@
-#app{
-    max-width: 97%;
+#app {
+  max-width: 97%;
 }
+
 /*header区显示*/
 header {
-    background: linear-gradient(to bottom, rgba(133, 168, 255, 0.3), rgba(255, 255, 255, 1));
-    width: 100%;
-    color: white;
-    padding: 25px 25px;
-    margin: 0;
-    display: flex;
-    justify-content: center;
+  background: linear-gradient(to bottom, rgba(133, 168, 255, 0.3), rgba(255, 255, 255, 1));
+  width: 100%;
+  color: white;
+  padding: 25px 25px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
-  
+
 header h1 {
-    text-align: center;
-    margin: 0;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    z-index: 1000;
+  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  z-index: 1000;
 }
-  
+
 .introduction {
-    margin-left: 3%;
-    background-color: #ffffff;
-    padding: 20px;
+  margin-left: 3%;
+  background-color: #ffffff;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.introduction nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.introduction nav ul li {
+  display: flex;
+}
+
+.introduction nav ul li el-card {
+  margin: 10px;
+}
+
+.introduction nav ul li a {
+  text-decoration: none;
+  font-size: larger;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  padding: 20px;
+}
+
+.introduction nav ul li a:hover {
+  color: #007BFF;
+}
+
+/* 轮播图样式 */
+.carousel {
+  position: relative;
+  max-width: 100%;
+  margin: 20px auto;
+  margin-left: 3%;
+  overflow: hidden;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease;
+  /* 平滑过渡 */
+}
+
+.carousel-item {
+  min-width: 100%;
+  /* 每个图片项占满父容器宽度 */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 垂直居中 */
+  overflow: hidden;
+  /* 防止图片超出容器 */
+}
+
+.carousel-item img {
+  max-width: 100%;
+  /* 图片宽度不超过父容器 */
+  height: auto;
+  /* 图片高度自适应，保持宽高比 */
+  display: block;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #007BFF;
+}
+/* 浮动动画效果 */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.introduction h1 {
+  animation: float 3s ease-in-out infinite;
+}
+
+#contanct p {
+  margin: 2rem;
+  padding: 0.5rem;
+}
+
+/*footer区显示*/
+footer {
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(133, 168, 255, 0.3));
+  color: rgb(46, 46, 46);
+  text-align: center;
+  padding: 25px;
+}
+
+footer h3 {
+  text-align: center;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  /* 将列表居中 */
+  display: flex;
+  justify-content: center;
+  /* 使列表项居中对齐 */
+  margin-bottom: 10px;
+}
+
+footer ul li {
+  margin: 0 10px;
+  /* 为每个列表项添加左右外边距 */
+}
+
+footer ul li a {
+  color: rgb(46, 46, 46);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+footer ul li a:hover {
+  color: #e0ee8b;
+}
+
+footer p {
+  font-size: 0.85em;
+  margin-top: 20px;
+  color: rgb(46, 46, 46);
+}
+
+@media (max-width: 1024px) {
+  header {
+    padding: 20px 20px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+  }
+
+  .introduction p {
+    padding: 2rem;
+  }
+
+  #contanct p {
+    margin: 1.5rem;
+  }
+
+  footer {
+    padding: 15px 15px;
+  }
+
+  footer p {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .introduction nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
   }
-  
+
   .introduction nav ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .introduction nav ul li {
-    display: flex;
+    flex-direction: column;
   }
 
-  .introduction nav ul li el-card{
-    margin: 10px;
-  }
-  
-  .introduction nav ul li a {
-    text-decoration: none;
-    font-size: larger;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s ease;
-    padding: 20px;
-  }
-  
-  .introduction nav ul li a:hover {
-    color: #007BFF;
-  }
-  
-  /* 轮播图样式 */
-  .carousel {
-    position: relative;
-    max-width: 100%;
-    margin: 20px auto;
-    margin-left: 3%;
-    overflow: hidden;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: 0;
-  }
-  
-  .carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-  }
-
-  .carousel-inner :active{
-    display: block;
-  }
-  
-  .carousel-item {
-    display: none; /* 默认隐藏 */
-  }
-  .carousel-item.active {
-    display: block; /* 显示活动的幻灯片 */
-  }
-  
-  .carousel-item img {
-    width: 100%;
-    display: block;
-  }
-  
-  .carousel-indicators {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .indicator {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    background-color: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .indicator.active {
-    background-color: #007BFF;
-  }
-  
-  /* 浮动动画效果 */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  .introduction h1 {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-#contanct p {
-    margin: 2rem;
+  .introduction nav ul li p {
+    margin: 1rem;
     padding: 0.5rem;
-}
-  
-/*footer区显示*/
-footer {
-    width: 100%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1),rgba(133, 168, 255, 0.3));
-    color: rgb(46, 46, 46);
-    text-align: center;
-    padding: 25px;
-}
-  
-footer h3 {
-    text-align: center;
-}
-  
-footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 auto; /* 将列表居中 */
-    display: flex;
-    justify-content: center; /* 使列表项居中对齐 */
-    margin-bottom: 10px;
-}
-  
-footer ul li {
-    margin: 0 10px; /* 为每个列表项添加左右外边距 */
-}
-  
-footer ul li a {
-    color: rgb(46, 46, 46);
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-  
-footer ul li a:hover {
-    color: #e0ee8b;
-}
-  
-footer p {
-    font-size: 0.85em;
-    margin-top: 20px;
-    color: rgb(46, 46, 46);
-}
-  
-@media (max-width: 1024px) {
-    header {
-        padding: 20px 20px;
-    }
-    header h1 {
-        font-size: 1.75rem;
-    }
-    .introduction p {
-        padding: 2rem;
-    }
-    #contanct p {
-        margin: 1.5rem;
-    }
-    footer {
-        padding: 15px 15px;
-    }
-    footer p {
-        font-size: 0.8em;
-    }
-}
-  
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.5rem;
-    }
-    .introduction nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-    }
-    .introduction nav ul {
-        flex-direction: column;
-    }
-    .introduction nav ul li p {
-        margin: 1rem;
-        padding: 0.5rem;
-    }
-    .introduction p {
-        padding: 1.5rem;
-    }
-    #contanct p {
-        margin: 1rem;
-    }
-    footer {
-        padding: 10px 10px;
-    }
-    footer p {
-        font-size: 0.75em;
-    }
+  }
+
+  .introduction p {
+    padding: 1.5rem;
+  }
+
+  #contanct p {
+    margin: 1rem;
+  }
+
+  footer {
+    padding: 10px 10px;
+  }
+
+  footer p {
+    font-size: 0.75em;
+  }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 15px 15px;
-    }
-    header h1 {
-        font-size: 1.25rem;
-    }
-    .introduction p {
-        padding: 1rem;
-    }
-    #contanct p {
-        margin: 0.5rem;
-    }
-    footer {
-        padding: 5px 5px;
-    }
-    footer p {
-        font-size: 0.7em;
-    }
+  header {
+    padding: 15px 15px;
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+  }
+
+  .introduction p {
+    padding: 1rem;
+  }
+
+  #contanct p {
+    margin: 0.5rem;
+  }
+
+  footer {
+    padding: 5px 5px;
+  }
+
+  footer p {
+    font-size: 0.7em;
+  }
 }

@@ -9,19 +9,23 @@
   <div class="carousel">
     <div class="carousel-inner" ref="carouselInner">
       <div class="carousel-item active">
-        <img src="/image1.png" alt="Image 1">
+        <img src="../assets/Fig1-DiagramM2GMC-6.jpg" alt="Image 1">
       </div>
       <div class="carousel-item">
-        <img src="/image2.png" alt="Image 2">
+        <img src="../assets/Fig1-FrameworkSTPD.jpg" alt="Image 2">
       </div>
       <div class="carousel-item">
-        <img src="/image3.png" alt="Image 3">
+        <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" alt="Image 3">
+      </div>
+      <div class="carousel-item">
+        <img src="../assets/Fig2-STembeddings.jpg" alt="Image 4">
       </div>
     </div>
     <div class="carousel-indicators">
       <span class="indicator active" @click="showSlide(0)"></span>
       <span class="indicator" @click="showSlide(1)"></span>
       <span class="indicator" @click="showSlide(2)"></span>
+      <span class="indicator" @click="showSlide(3)"></span>
     </div>
   </div>
 
@@ -50,69 +54,69 @@
   </template>
   
   <style scoped>
-  @import '../assets/index.css';
-  @import url("//cdn.jsdelivr.net/npm/element-plus/dist/index.css");
-  </style>
-<script>
+@import url("//cdn.jsdelivr.net/npm/element-plus/dist/index.css");
+@import '../assets/index.css';
+</style>
+
+<script scoped>
 export default {
   mounted() {
-        // //两个定时器
-        // var dsq1,dsq2;
-        // //单个图片的长度，为后续移动路程的计算做准备
-        // var imgW = imgs[0].offsetWidth
-        // //第一张显示的图片下标
-        // var imgIndex = 1
-        // //默认的按钮下标
-        // var btnIndex = 0
-        // //初始的main的scrollLeft值 600px
-        // main.scrollLeft = imgW*imgIndex
-
     let currentIndex = 0;
     const slides = this.$el.querySelectorAll('.carousel-item');
     const indicators = this.$el.querySelectorAll('.indicator');
 
+    // 动态设置轮播图高度为最小图片高度
+    const setCarouselHeight = () => {
+      let minHeight = Infinity;
+      slides.forEach((slide) => {
+        const img = slide.querySelector('img');
+        if (img.complete) { // 检查图片是否加载完成
+          const height = img.naturalHeight; // 获取图片原始高度
+          if (height < minHeight) {
+            minHeight = height;
+          }
+        }
+      });
+      this.$el.querySelector('.carousel').style.height = `${minHeight}px`/5;
+    };
+
+    // 确保图片加载完成后设置高度
+    slides.forEach((slide) => {
+      const img = slide.querySelector('img');
+      img.onload = setCarouselHeight;
+    });
+
+    // 初始调用一次，以防图片已经加载完成
+    setCarouselHeight();
+
     function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slides[i].classList.toggle('active', i === index);
-        indicators[i].classList.toggle('active', i === index);
+      const carouselInner = this.$refs.carouselInner;
+      const slideWidth = slides[index].clientWidth; // 获取当前图片的宽度
+      const translateX = -index * slideWidth; // 计算平移距离
+      carouselInner.style.transform = `translateX(${translateX}px)`; // 平滑移动
+
+      // 更新指示器的活动状态
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === index);
       });
     }
 
     function nextSlide() {
       let nextIndex = (currentIndex + 1) % slides.length;
-      showSlide(nextIndex);
+      showSlide.call(this, nextIndex); // 使用 call 确保 this 指向正确
       currentIndex = nextIndex;
     }
 
-    // function move(){
-    //         //获取开始值和结束值,指每2张图片之间移动的距离
-    //         var start = main.scrollLeft
-    //         var end = imgIndex*imgW
-    //         var speed = (end-start)/20//speed=30
-    //         //num为步数，宽度为600px,speed为30，则走完需要20步
-    //         var num = 0
-    //         clearInterval(dsq2)
-    //         dsq2 = setInterval(function(){
-    //             num++
-    //             if(num == 20){
-    //                 clearInterval(dsq2)
-    //                 main.scrollLeft = end
-    //             }else{
-    //                 start += speed
-    //                 main.scrollLeft = start
-    //            }
-    //             //注意dsq2的时间和dsq1时间的大小，dsq2的时间间隔不能太大   
-    //         },30)
-    //     }  
-
-    setInterval(nextSlide, 3000); // 自动播放轮播图，每3秒切换一次
+    setInterval(() => {
+      nextSlide.call(this); // 使用 call 确保 this 指向正确
+    }, 5000); // 自动播放轮播图，每5秒切换一次
 
     indicators.forEach((indicator, index) => {
       indicator.addEventListener('click', () => {
-        showSlide(index);
+        showSlide.call(this, index); // 使用 call 确保 this 指向正确
         currentIndex = index;
       });
     });
   }
-}
+};
 </script>

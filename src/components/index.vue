@@ -49,6 +49,8 @@
           <li><a href="/diagnosis" title="数据测试">Diagnosis</a></li>
         </ul>
         <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
+        <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank" class="report-link" rel="noreferrer"><img alt="" data-src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" class="report-img" src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" style="width: 20px;height: auto;margin-left: 10px"><span class="report-link-text" style="color: black">浙公网安备33019202002609号</span></a>
       </footer>
     </div>
   </template>

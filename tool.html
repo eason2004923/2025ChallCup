@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vis.js 点分组与颜色</title>
+  <!-- 引入 Vis.js 的 CSS 和 JS -->
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <link href="https://unpkg.com/vis-network/styles/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    #network-container {
+      width: 800px;
+      height: 600px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vis.js 节点分组与颜色示例</h1>
+  <div id="network-container"></div>
+
+  <script>
+    // 定义节点分组的样式
+    const groups = {
+      'group1': {
+        color: {
+          background: "#FFCCCC", // 背景颜色
+          border: "#FF0000",     // 边框颜色
+          highlight: {
+            background: "#FFAAAA", // 高亮背景颜色
+            border: "#FF0000"      // 高亮边框颜色
+          }
+        }
+      },
+      'group2': {
+        color: {
+          background: "#CCE5FF", // 背景颜色
+          border: "#0000FF",     // 边框颜色
+          highlight: {
+            background: "#AACCFF", // 高亮背景颜色
+            border: "#0000FF"      // 高亮边框颜色
+          }
+        }
+      }
+    };
+
+    // 定义网络图的配置选项
+    const options = {
+      groups: groups,
+      nodes: {
+        shape: 'dot', // 指定节点形状为圆形
+        size: 15,     // 设置节点大小
+        borderWidth: 2 // 设置节点边框宽度
+      },
+      edges: {
+        width: 0.5,   // 设置边的宽度
+        smooth: {
+          type: 'continuous' // 平滑曲线
+        }
+      },
+      physics: {
+        enabled: true,
+        forceAtlas2Based: {
+          avoidOverlap: 0,
+          centralGravity: 0.015,
+          damping: 0.4,
+          gravitationalConstant: -31,
+          springConstant: 0.08,
+          springLength: 100
+        },
+        solver: "forceAtlas2Based",
+        stabilization: {
+          enabled: true,
+          fit: true,
+          iterations: 1000,
+          onlyDynamicEdges: false,
+          updateInterval: 50
+        }
+      },
+      interaction: {
+        dragNodes: true,
+        hideEdgesOnDrag: false,
+        hideNodesOnDrag: false
+      }
+    };
+
+    // 创建节点数据集
+    const nodes = new vis.DataSet([
+      { id: 1, label: 'Node 1', group: 'group1' }, // 属于 group1
+      { id: 2, label: 'Node 2', group: 'group2' }, // 属于 group2
+      { id: 3, label: 'Node 3', group: 'group1' }, // 属于 group1
+      { id: 4, label: 'Node 4', group: 'group2' }  // 属于 group2
+    ]);
+
+    // 创建边数据集
+    const edges = new vis.DataSet([
+      { from: 1, to: 2 },
+      { from: 2, to: 3 },
+      { from: 3, to: 4 },
+      { from: 4, to: 1 }
+    ]);
+
+    // 将数据和选项绑定到容器
+    const container = document.getElementById('network-container');
+    const data = {
+      nodes: nodes,
+      edges: edges
+    };
+    const network = new vis.Network(container, data, options);
+  </script>
+</body>
+</html>

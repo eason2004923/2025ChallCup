@@ -64,6 +64,7 @@
           <el-button class="btn" type="primary" @click="getChart" v-loading="gettingChart">step2(getChart)</el-button>
           <!-- 获取PFN邻接表 -->
           <el-button class="btn" type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
+          <el-button class="btn" type="primary" @click="test" v-loading="gettingPFNChart">test</el-button>
         </div>
       </div>
        </div>
@@ -127,9 +128,9 @@ const nodes =new DataSet([
       ])
 const edges =new DataSet([
           {from: 1, to: 3},
-          {from: 1, to: 2},
+          {from: 1, to: 2, type:'c1_2'},
           {from: 2, to: 4},
-          {from: 2, to: 5}
+          {from: 2, to: 5, type:'c1_4'}
       ])
 
   //打开upload弹窗
@@ -295,18 +296,87 @@ const drawChart=(data:string)=>{
     console.log(linesArray);
     console.log(linesArray.length);
     //添加点边信息
+    nodes.clear();
+    edges.clear();
     linesArray.forEach(element => {
         const mediate = element.split(',');
+        if (!nodes.get(mediate[0])) {
+            nodes.add({id: mediate[0], label: ''});
+        }
         if (!nodes.get(mediate[1])) {
             nodes.add({id: mediate[1], label: ''});
         }
-        if (!nodes.get(mediate[2])) {
-            nodes.add({id: mediate[2], label: ''});
-        }
-        edges.add({from: mediate[1], to: mediate[2]});
+        edges.add({from: mediate[0], to: mediate[1], color: { color: mediate[4] }});
+        // edges.add({from: mediate[0], to: mediate[1], type:mediate[3]});
     });
+    updateNodeColors();
   }
+  console.log(edges)
 }
+  const test=async ()=>{
+    //获取文件名
+    let lastDotIndex: number = fileName.value.lastIndexOf('.');
+    let newFilename: string = fileName.value.slice(0, lastDotIndex) + '_1000_PFN' + fileName.value.substring(lastDotIndex);
+    console.log('moduleCluster for:',newFilename)
+    //进行聚类
+    const res:any=await FileApi.moduleCluster('PPMI-data_M6_1000_PFN.csv',uid.value)
+    console.log('res:',res)  
+    const respone:any=await FileApi.getFile('PPMI-data_M6_1000_PFN_modules.csv')
+    console.log('res:',respone)
+    //绘制图谱
+    drawChart(respone.data)
+  }
+
+  // 动态更新节点颜色
+  function updateNodeColors() {
+      const nodeColorMap: { [key: number]: string[] } = {};
+      // 动态为边设置样式
+      // edges.forEach((edge:any) => {
+      //     let color;
+      //     switch (edge.type) {
+      //         case 'c1_4':
+      //             color = 'red';
+      //             break;
+      //         case 'c1_2':
+      //             color = 'blue';
+      //             break;
+      //         case 'c1_6':
+      //             color = 'yellow';
+      //             break;
+      //         case 'c1_11':
+      //             color = 'purple';
+      //             break;
+      //         case 'c1_18':
+      //             color = 'orange';
+      //             break;
+      //         default:
+      //             color = 'grey';
+      //     }
+      //     edges.update({ id: edge.id, color: { color: color } });
+      // });
+      // 遍历所有边，收集节点的颜色信息
+      edges.forEach((edge:any) => {
+          const fromNode = edge.from;
+          const toNode = edge.to;
+
+          // 如果节点还没有颜色，初始化为空数组
+          if (!nodeColorMap[fromNode]) nodeColorMap[fromNode] = [];
+          if (!nodeColorMap[toNode]) nodeColorMap[toNode] = [];
+          
+          // 将边的颜色添加到对应的节点中
+          nodeColorMap[fromNode].push(edge.color.color);
+          nodeColorMap[toNode].push(edge.color.color);
+      });
+
+      // 更新节点颜色
+      Object.keys(nodeColorMap).forEach((nodeId:any) => {
+          const colors = nodeColorMap[nodeId];
+
+          // 如果节点连接多条边，可以选择混合颜色或使用第一条边的颜色
+          const nodeColor = colors[0]; // 使用第一条边的颜色
+          nodes.update({ id: nodeId, color: { background: nodeColor ,border:nodeColor} });
+      });
+  }
   window.onload = function() {
 
       const container = document.getElementById('mynetwork')
@@ -315,6 +385,11 @@ const drawChart=(data:string)=>{
           edges:edges
       }
       const options = {
+          groups:{
+            c1_2: { color: { color: 'red', highlight: 'darkred' } }, // 类型1的颜色
+            c1_4: { color: { background: 'blue', border: 'darkblue' } }, // 类型2的颜色
+            default: { color: { background: 'gray', border: 'black' } } // 默认颜色
+          },
           nodes: {
               shape: 'dot', // 指定节点形状为圆形
               size: 10, // 设置节点的大小为10像素
@@ -328,7 +403,6 @@ const drawChart=(data:string)=>{
           },
           edges: {
               width: 0.15, // 线的宽度
-              color: {inherit: 'from'}, // 指定线的颜色继承自节点的颜色
               smooth: {
                   type: 'continuous' // 指定边为平滑曲线
               }
@@ -365,7 +439,7 @@ const drawChart=(data:string)=>{
     const fileInput = event.target as HTMLInputElement;
     const fileName = fileInput.files?.[0] ? fileInput.files[0].name : '未选择文件';
     (document.querySelector('.file-name') as HTMLElement).textContent = fileName;
-
+      
     const file = fileInput.files?.[0];
     console.log('file:', file);
     if (file) {
@@ -413,7 +487,7 @@ let eventSource:any//SSE实例
 const ConnectSSE = () => {
   CloseSSE();
   uid.value = '2025'
-  eventSource = new EventSource(`http://47.98.97.32:6090/sse/createSse?uid=${uid.value}`);
+  eventSource = new EventSource(`https://www.dementiaai.cn/backside/sse/createSse?uid=${uid.value}`);
   eventSource.onopen = function () {
     console.log('SSE链接成功,uid:', uid.value);
   }

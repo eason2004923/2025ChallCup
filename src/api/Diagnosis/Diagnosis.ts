@@ -14,7 +14,7 @@ export const FileApi={
       throw new Error('Failed to upload the CSV file');
     }
   },
-  //step1_挑选基因
+  //挑选基因
   selectGene:async(fileName:string,uid:string,num:string)=>{
     //判断文件名是否存在
     if(!fileName){
@@ -26,7 +26,7 @@ export const FileApi={
       console.log("selectGene error:",error)
     }
   },  
-  //step2_生成基因图谱
+  //生成基因图谱
   createGeneMap:async(fileName:string,uid:string)=>{
     //判断文件名是否存在
     if(!fileName){
@@ -38,7 +38,19 @@ export const FileApi={
       console.log("createGeneMap error:",error)
     }
   },
-  //step3_邻接矩阵转化
+  //聚类
+  moduleCluster:async(fileName:string,uid:string)=>{
+    //判断文件名是否存在
+    if(!fileName){
+      return Promise.reject(new Error('fileName is required'));
+    }
+    try{
+      return await Axios.get('/M2STGAT/moduleCluster',{params:{fileName:fileName,uid:uid}})
+    }catch(error){
+      console.log("moduleCluster error:",error)
+    }
+  },
+  //邻接矩阵转化
   createAdjMatrix:async(fileName:string,uid:string)=>{
     //判断文件名是否存在
     if(!fileName){
@@ -50,7 +62,7 @@ export const FileApi={
       console.log("createAdjMatrix error:",error)
     }
   },
-  //step4_获取文件
+  //获取文件
   getFile:async(fileName:string)=>{
     //判断文件名是否存在
     if(!fileName){

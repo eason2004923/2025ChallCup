@@ -87,7 +87,8 @@
           <p><a href="/Description" title="辅助诊断AI系统简介">Description</a></p>
         </div>
         <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
-        <p>Contact us: <a href="https://www.zstu.edu.cn/">support@zstu.edu.cn</a></p>
+        <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank" class="report-link" rel="noreferrer"><img alt="" data-src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" class="report-img" src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" style="width: 20px;height: auto;margin-left: 10px"><span class="report-link-text" style="color: black">浙公网安备33019202002609号</span></a>
       </div>
     </div>
     <uploaDia ref="uploadRef" @getFile="getFileName" @closeDialog="closeUpload"/>

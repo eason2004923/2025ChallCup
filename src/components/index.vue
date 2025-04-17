@@ -1,61 +1,78 @@
 <template>
-    <div id="app">
-      <header>
-        <div>
+  <div id="app">
+    <header>
+      <div class="header-container">
+        <div class="empty">
+          <img src="https://gd-hbimg.huaban.com/1a889cfd89caecf4325e9310a3cc6728f4c5d730dddbb-G0mRDe_fw1200webp" alt="">
+        </div>
+        <div class="logo">
           <h1>二期辅助诊断系统</h1>
         </div>
-      </header>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/diagnosis">诊断工具</a></li>
+            <li><a href="/">数据管理</a></li>
+            <li><a href="/Description">关于系统</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-  <div class="carousel">
-    <div class="carousel-inner" ref="carouselInner">
-      <div class="carousel-item active">
-        <img src="../assets/Fig1-DiagramM2GMC-6.jpg" alt="Image 1">
+    <div class="carousel">
+      <div class="carousel-inner" ref="carouselInner">
+        <div class="carousel-item active">
+          <img src="../assets/Fig1-DiagramM2GMC-6.jpg" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/Fig1-FrameworkSTPD.jpg" alt="Image 2">
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" alt="Image 3">
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/Fig2-STembeddings.jpg" alt="Image 4">
+        </div>
       </div>
-      <div class="carousel-item">
-        <img src="../assets/Fig1-FrameworkSTPD.jpg" alt="Image 2">
-      </div>
-      <div class="carousel-item">
-        <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" alt="Image 3">
-      </div>
-      <div class="carousel-item">
-        <img src="../assets/Fig2-STembeddings.jpg" alt="Image 4">
+      <div class="carousel-indicators">
+        <span class="indicator active" @click="showSlide(0)"></span>
+        <span class="indicator" @click="showSlide(1)"></span>
+        <span class="indicator" @click="showSlide(2)"></span>
+        <span class="indicator" @click="showSlide(3)"></span>
       </div>
     </div>
-    <div class="carousel-indicators">
-      <span class="indicator active" @click="showSlide(0)"></span>
-      <span class="indicator" @click="showSlide(1)"></span>
-      <span class="indicator" @click="showSlide(2)"></span>
-      <span class="indicator" @click="showSlide(3)"></span>
-    </div>
-  </div>
 
-  <div class="introduction">
-    <nav>
-      <ul>
-        <li>
-          <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">系统简介</a></el-card>
-          <el-card shadow="hover"><a href="/diagnosis" title="前往数据测试页面">数据测试</a></el-card>
-        </li>
-      </ul>
-    </nav>
-  </div>
-  
-      <footer>
-        <h3>All about this</h3>
-        <h3>please contanct with us.</h3>
+    <div class="introduction">
+      <nav>
         <ul>
-          <li><a href="" title="背景情况介绍">Background</a></li>
-          <li><a href="/Description" title="辅助诊断AI系统简介">Description</a></li>
-          <li><a href="/diagnosis" title="数据测试">Diagnosis</a></li>
+          <li>
+            <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">系统简介</a></el-card>
+            <el-card shadow="hover"><a href="/diagnosis" title="前往数据测试页面">数据测试</a></el-card>
+          </li>
         </ul>
-        <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
-        <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>
-        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank" class="report-link" rel="noreferrer"><img alt="" data-src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" class="report-img" src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" style="width: 20px;height: auto;margin-left: 10px"><span class="report-link-text" style="color: black">浙公网安备33019202002609号</span></a>
-      </footer>
+      </nav>
     </div>
-  </template>
-  
-  <style scoped>
+
+    <footer>
+      <h3>All about this</h3>
+      <h3>please contanct with us.</h3>
+      <ul>
+        <li><a href="" title="背景情况介绍">Background</a></li>
+        <li><a href="/Description" title="辅助诊断AI系统简介">Description</a></li>
+        <li><a href="/diagnosis" title="数据测试">Diagnosis</a></li>
+      </ul>
+      <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
+      <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank" class="report-link"
+        rel="noreferrer"><img alt="" data-src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"
+          class="report-img" src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"
+          style="width: 20px;height: auto;margin-left: 10px"><span class="report-link-text"
+          style="color: black">浙公网安备33019202002609号</span></a>
+    </footer>
+  </div>
+</template>
+
+<style scoped>
 @import url("//cdn.jsdelivr.net/npm/element-plus/dist/index.css");
 @import '../assets/index.css';
 </style>
@@ -79,7 +96,7 @@ export default {
           }
         }
       });
-      this.$el.querySelector('.carousel').style.height = `${minHeight}px`/5;
+      this.$el.querySelector('.carousel').style.height = `${minHeight}px` / 5;
     };
 
     // 确保图片加载完成后设置高度

@@ -64,7 +64,7 @@
           <el-button class="btn" type="primary" @click="getChart" v-loading="gettingChart">step2(getChart)</el-button>
           <!-- 获取PFN邻接表 -->
           <el-button class="btn" type="primary" @click="getPFNChart" v-loading="gettingPFNChart">getPFNChart</el-button>
-          <el-button class="btn" type="primary" @click="test" v-loading="gettingPFNChart">test</el-button>
+          <el-button class="btn" type="primary" @click="test" v-loading="testing">test</el-button>
         </div>
       </div>
        </div>
@@ -115,6 +115,7 @@
   const processingGene=ref(false)//processGene状态工具
   const gettingChart=ref(false)//getChart状态工具
   const gettingPFNChart=ref(false)//getChart状态工具
+  const testing=ref(false)//testing状态工具
   const progressBar=ref('0')//进度条工具
   const uploadRef=ref()
 
@@ -319,13 +320,16 @@ const drawChart=(data:string)=>{
     let lastDotIndex: number = fileName.value.lastIndexOf('.');
     let newFilename: string = fileName.value.slice(0, lastDotIndex) + '_1000_PFN' + fileName.value.substring(lastDotIndex);
     console.log('moduleCluster for:',newFilename)
+    testing.value=true
     //进行聚类
     const res:any=await FileApi.moduleCluster('PPMI-data_M6_1000_PFN.csv',uid.value)
     console.log('res:',res)  
     const respone:any=await FileApi.getFile('PPMI-data_M6_1000_PFN_modules.csv')
     console.log('res:',respone)
+
     //绘制图谱
     drawChart(respone.data)
+    testing.value=false
   }
 
   // 动态更新节点颜色
@@ -412,7 +416,8 @@ const drawChart=(data:string)=>{
               enabled: true,
               forceAtlas2Based: {
                   avoidOverlap: 0,
-                  centralGravity: 0.015,
+                  centralGravity: 0.003,
+                  // centralGravity: 0.015,
                   damping: 0.4,
                   gravitationalConstant: -31,
                   springConstant: 0.08,

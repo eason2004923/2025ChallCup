@@ -62,14 +62,14 @@
               <!-- 绘制邻接表 -->
               <div class="container_2">
                 <!-- 处理基因文件 -->
-                <el-button class="btn btn1" type="primary" @click="processGene"
+                <el-button class="btn" type="primary" @click="processGene"
                   v-loading="processingGene">挑选基因</el-button>
                 <!-- 获取PFN邻接表 -->
                 <!-- <el-button class="btn" type="primary" @click="getPFNChart"
                   v-loading="gettingPFNChart">PFN推理</el-button> -->
-                <el-button class="btn" type="primary" @click="moduleCluster" v-loading="clustering">子图划分</el-button>
+                <el-button class="btn btn1" type="primary" @click="moduleCluster" v-loading="clustering">子图划分</el-button>
                 <!-- 邻接矩阵转化 -->
-                <el-button class="btn" type="primary" @click="createAdjMatrix"
+                <el-button class="btn btn1" type="primary" @click="createAdjMatrix"
                   v-loading="createing_Adj">启动ai微服务</el-button>
               </div>
             </div>

@@ -87,6 +87,9 @@ header h1 {
   height: 30rem;
   box-shadow: 0 0 10px rgba(121, 121, 121, 0.5);
   transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content1:hover {
@@ -204,7 +207,7 @@ header h1 {
 }
 
 .dropdown-button {
-  width: 65%;
+  width: 70%;
 }
 
 .container {
@@ -227,15 +230,14 @@ header h1 {
 
 .container_1 {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .upload-btn {
-  width: 35%;
-  margin: 0;
-  padding: 0;
-  margin-left: 5px;
+  width: 60%;
+  margin-bottom: 5px;
 }
 
 .container_1 span {
@@ -258,7 +260,7 @@ header h1 {
 }
 
 .btn1 {
-  margin-left: 12px;
+  margin-right: 12px;
 }
 
 .el-button.v-loading {
@@ -298,6 +300,8 @@ header h1 {
   width: 100%;
   background-color: #f5f9fd;
   overflow: hidden;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .console h3 {
@@ -312,7 +316,7 @@ header h1 {
 
 .console-content {
   padding: 0;
-  height: 150px;
+  height: 18rem;
   overflow-y: auto;
   font-family: "Courier New", Courier, monospace;
   font-size: 14px;
@@ -326,7 +330,7 @@ header h1 {
 }
 
 .console-content .info {
-  color: #9bc8ec;
+  color: #4c9cdd;
   /* 蓝色 */
 }
 
@@ -349,10 +353,12 @@ header h1 {
   background-color: #878787;
   border-radius: 0;
   color: #ecf5ff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .clearConsoleButton:hover {
-  color: #94c8ff;
+  color: #31ffe7;
   /* 鼠标悬停时的颜色 */
   transition: background-color 0.3s ease;
 }

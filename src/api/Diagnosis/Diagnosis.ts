@@ -62,6 +62,15 @@ export const FileApi={
       console.log("createAdjMatrix error:",error)
     }
   },
+  //利用模型预测
+  predictMoudle:async(uid:string)=>{
+    try{
+      return await Axios.get('/M2STGAT/predict',{params:{M12GeneFileName:'PPMI-data_M12_1000.csv',M24GeneFileName:'PPMI-data_M24_1000.csv',M36GeneFileName:'PPMI-data_M36_1000.csv',
+                                                         M12AdjMatrixFileName:'M12_AdjMatrix.csv',M24AdjMatrixFileName:'M24_AdjMatrix.csv',M36AdjMatrixFileName:'M36_AdjMatrix.csv',uid:uid}})
+    }catch(error){
+      console.log("predictMoudle error:",error)
+    }
+  },
   //获取文件
   getFile:async(fileName:string)=>{
     //判断文件名是否存在

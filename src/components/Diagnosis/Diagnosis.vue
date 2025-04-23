@@ -148,7 +148,6 @@ import uploaDia from './uploaDia.vue';
 import { FileApi } from '../../api/Diagnosis/Diagnosis';
 import { nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
-import { tr } from 'element-plus/es/locales.mjs';
 // import { da } from 'element-plus/es/locales.mjs';
 const uid = ref('2025')
 const fileName = ref('未选择文件')//暂存上传的文件名

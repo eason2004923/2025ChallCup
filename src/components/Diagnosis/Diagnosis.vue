@@ -83,9 +83,12 @@
           <div class="node-info-container">
             <h3>Node Information</h3>
             <div class="node-info">
-              <p>Yellow node: <span id="node1">***</span></p>
-              <p>Blue node: <span id="node2">***</span></p>
-              <p>Orange node: <span id="node3r">***</span></p>
+              <p>Total genes: <span id="node2">{{total_genes}}</span></p>
+              <p>Total edges: <span id="node1">{{total_edges}}</span></p>
+              <!-- <el-table :data="module" style="width: 100%">
+                <el-table-column prop="name" label="Name" width="180" />
+                <el-table-column prop="color" label="Color" width="180" />
+              </el-table> -->
             </div>
           </div>
           <!-- 控制台区域 -->
@@ -168,6 +171,7 @@ const nodes = new DataSet([
   { id: 4, label: 'Node 4' },
   { id: 5, label: 'Node 5' }
 ])
+
 const edges = new DataSet([
   { from: 1, to: 3 },
   { from: 1, to: 2, type: 'c1_2' },
@@ -203,7 +207,7 @@ const processGene = async () => {
     processingGene.value = true//设置按钮为激活状态
     console.log('selectGene for file:', fileName.value)
     //step1_selectGene
-    const res_step1 = await FileApi.selectGene(fileName.value, uid.value, '100')
+    const res_step1 = await FileApi.selectGene(fileName.value, uid.value, '1000')
     console.log('selectGene success,res:', res_step1)
     //step2_createGeneMap
     let lastDotIndex: number = fileName.value.lastIndexOf('.');
@@ -221,17 +225,38 @@ const processGene = async () => {
 }
 //获取邻接矩阵
 const createAdjMatrix = async () => {
-  //检查fileName是否存在
-  if (fileName.value == '未选择文件') {
-    ElMessage.error('请先上传文件')
-    console.log('请先上传文件')
-    return;
-  }
   try {
+    // //处理M12
+    const res12=await FileApi.selectGene('PPMI-data_M12.csv', uid.value, '1000')
+    console.log('selectGene success,res:', res12)
+    console.log('createGeneMap for file:', 'PPMI-data_M12_1000.csv')
+    const res_1 = await FileApi.createGeneMap('PPMI-data_M12_1000.csv', uid.value)
+    console.log('createGeneMap success,res:', res_1)
     console.log('createing_Adj...')
     createing_Adj.value = true
-    const res = await FileApi.createAdjMatrix('Data_Correlation.txt', uid.value)
-    console.log('success getChart,res:', res)
+    const res_adj1 = await FileApi.createAdjMatrix('Data_Correlation.txt','M12', uid.value)
+    console.log('success getChart,res:', res_adj1)
+    // // //处理M24
+    // const res24=await FileApi.selectGene('PPMI-data_M24.csv', uid.value, '1000')
+    // console.log('selectGene success,res:', res24)    
+    // console.log('createGeneMap for file:', 'PPMI-data_M24_1000.csv')
+    // const res_2 = await FileApi.createGeneMap('PPMI-data_M24_1000.csv', uid.value)
+    // console.log('createGeneMap success,res:', res_2)
+    // console.log('createing_Adj...')
+    // createing_Adj.value = true
+    // const res_adj2 = await FileApi.createAdjMatrix('Data_Correlation.txt','M24', uid.value)
+    // console.log('success getChart,res:', res_adj2)
+    // //处理M36
+    // const res36=await FileApi.selectGene('PPMI-data_M36.csv', uid.value, '1000')
+    // console.log('selectGene success,res:', res36)        
+    // console.log('createGeneMap for file:', 'PPMI-data_M36_1000.csv')
+    // const res_3 = await FileApi.createGeneMap('PPMI-data_M36_1000.csv', uid.value)
+    // console.log('createGeneMap success,res:', res_3)
+    // console.log('createing_Adj...')
+    // createing_Adj.value = true
+    // const res_adj3 = await FileApi.createAdjMatrix('Data_Correlation.txt','M36', uid.value)
+    // console.log('success getChart,res:', res_adj3)
+    predictMoudle();//调用模型预测
     progressBar.value = '100'
   } catch (error) {
     progressBar.value = '50'
@@ -276,6 +301,15 @@ const loadFile = async (tool: string) => {
     console.log('已选择测试文件：',fileName)
   }
 };
+//绘画图表
+//定义类对象数组，输出可能的类及其颜色
+interface ColorClass {
+  name: string;
+  color: string;
+}
+const module = ref<ColorClass[]>([
+
+]);
 const drawChart = (data: string) => {
   if (data) {
     console.log('csvData:', data)
@@ -310,13 +344,28 @@ const drawChart = (data: string) => {
         nodes.add({ id: mediate[1], label: '' });
       }
       edges.add({ from: mediate[0], to: mediate[1], color: { color: mediate[4] } });
-      // edges.add({from: mediate[0], to: mediate[1], type:mediate[3]});
+      // 检查是否已存在相同 id 的对象
+      const exists = module.value.some(
+        (item) => item.name === mediate[3] && item.color === mediate[4]
+      );
+      if(!exists){
+        const newItem: ColorClass = {
+          name: mediate[3], // 提取 mediate[3] 作为 name
+          color: mediate[4], // 提取 mediate[4] 作为 color
+        };
+        module.value.push(newItem)
+      }
     });
+    console.log('module:',module.value)
     updateNodeColors();
     ElMessage.success('成功绘制聚类图谱~')
   }
   console.log(edges)
 }
+
+//聚类模块
+const total_edges=ref('未生成图表')
+const total_genes=ref('未生成图表')
 const moduleCluster = async () => {
   //检查fileName是否存在
   if (fileName.value == '未选择文件') {
@@ -334,6 +383,10 @@ const moduleCluster = async () => {
     ElMessage.success('正在绘制聚类图谱~')
     const res: any = await FileApi.moduleCluster(newFilename, uid.value)
     console.log('res:', res)
+    console.log('edges:', res.data.data.ClusterInfo["Total edges"])  
+    total_edges.value=res.data.data.ClusterInfo["Total edges"]
+    console.log('genes  :', res.data.data.ClusterInfo["Total genes"])  
+    total_genes.value=res.data.data.ClusterInfo["Total genes"]
     console.log('getfile:', newFilename_)
     const respone: any = await FileApi.getFile(newFilename_)
     console.log('res:', respone)
@@ -345,7 +398,19 @@ const moduleCluster = async () => {
     clustering.value=false
   }
 }
-
+//调用模型预测
+const predictMoudle = async () => {
+  try{  
+    //createGeneMap
+    console.log('开始调用模型预测')
+    const res = await FileApi.predictMoudle(uid.value)
+    console.log('res:',res)
+  }catch(error){
+    ElMessage.error('调用模型预测失败')
+  }finally{
+    clustering.value=false
+  }
+}
 // 动态更新节点颜色
 function updateNodeColors() {
   const nodeColorMap: { [key: number]: string[] } = {};
@@ -386,7 +451,7 @@ function updateNodeColors() {
     nodeColorMap[fromNode].push(edge.color.color);
     nodeColorMap[toNode].push(edge.color.color);
   });
-
+  console.log('nodeColorMap:',nodeColorMap)
   // 更新节点颜色
   Object.keys(nodeColorMap).forEach((nodeId: any) => {
     const colors = nodeColorMap[nodeId];

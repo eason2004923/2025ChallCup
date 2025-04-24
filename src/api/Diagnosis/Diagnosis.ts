@@ -51,13 +51,13 @@ export const FileApi={
     }
   },
   //邻接矩阵转化
-  createAdjMatrix:async(fileName:string,uid:string)=>{
+  createAdjMatrix:async(fileName:string,type:string,uid:string)=>{
     //判断文件名是否存在
     if(!fileName){
       return Promise.reject(new Error('fileName is required'));
     }
     try{
-      return await Axios.get('/M2STGAT/createAdjMatrix',{params:{fileName:fileName,uid:uid}})
+      return await Axios.get('/M2STGAT/createAdjMatrix',{params:{fileName:fileName,type:type,uid:uid}})
     }catch(error){
       console.log("createAdjMatrix error:",error)
     }

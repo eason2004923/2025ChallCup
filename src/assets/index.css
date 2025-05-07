@@ -126,6 +126,7 @@ header h1 {
   /* 每个图片项占满父容器宽度 */
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   /* 垂直居中 */
@@ -221,7 +222,7 @@ footer ul li a {
 }
 
 footer ul li a:hover {
-  color: #e0ee8b;
+  color: #63a2ff;
 }
 
 footer p {

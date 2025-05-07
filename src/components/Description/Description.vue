@@ -11,7 +11,6 @@
         <ul>
           <li><a href="/">首页</a></li>
           <li><a href="/diagnosis">诊断工具</a></li>
-          <li><a href="/">数据管理</a></li>
           <li><a href="/Description">关于系统</a></li>
         </ul>
       </nav>
@@ -54,14 +53,13 @@
 
     <!-- Footer区域 -->
     <footer>
-      <div class="footer-content">
         <h3>All about this</h3>
-        <p>Plaease contact with us</p>
+        <h3>Plaease contact with us</h3>
         <ul class="footer-links">
           <li><a href="/" title="首页">首页</a></li>
-          <li><a href="/diagnosis" title="数据测试">数据测试</a></li>
+          <li><a href="/diagnosis" title="诊断工具">诊断工具</a></li>
+          <li><a href="/Description" title="关于系统">关于系统</a></li>
         </ul>
-      </div>
       <div class="footer-bottom">
         <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
         <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>

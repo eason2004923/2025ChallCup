@@ -12,11 +12,11 @@ header {
   margin: 0;
 }
 
-.empty{
+.empty {
   flex: 1;
 }
 
-.empty img{
+.empty img {
   width: 75px;
   margin: 0;
 }
@@ -41,7 +41,7 @@ header h1 {
   align-items: center;
 }
 
-.nav-menu{
+.nav-menu {
   flex: 1;
   width: 100%;
   display: flex;
@@ -121,6 +121,7 @@ header h1 {
 
 .content3 {
   flex: 1;
+  max-width: 30%;
   border-radius: 10px;
   background-color: #f9f9f9;
   height: 30rem;
@@ -297,51 +298,43 @@ header h1 {
 }
 
 .console {
-  width: 100%;
-  background-color: #f5f9fd;
+  background-color: #4d4d4d;
   overflow: hidden;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
 .console h3 {
-  color: #333;
-  background-color: #878787;
-  padding: 5px;
+  color: #ffffff;
+  background-color: #494949;
   margin: 0;
-  border-bottom: 1px solid #f9f5e9;
+  border-bottom: 1px solid #3a3d41;
   text-align: center;
   font-size: 1.2em;
 }
 
 .console-content {
-  padding: 0;
-  height: 18rem;
+  height: 18.6rem;
   overflow-y: auto;
-  font-family: "Courier New", Courier, monospace;
   font-size: 14px;
   line-height: 1.5;
-  background-color: #878787;
-}
-
-.console-content p {
-  margin: 2px 0;
-  font-size: 0.9em;
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
 .console-content .info {
-  color: #4c9cdd;
-  /* 蓝色 */
+  color: #ffffff;
+  /* VSCode 的信息蓝色 */
 }
 
 .console-content .warning {
-  color: #e5c07b;
-  /* 黄色 */
+  color: #dcdcaa;
+  /* VSCode 的警告黄色 */
 }
 
 .console-content .error {
-  color: #fc8892;
-  /* 红色 */
+  color: #f44747;
+  /* VSCode 的错误红色 */
 }
 
 .clearConsoleButton {
@@ -350,18 +343,161 @@ header h1 {
   padding: 5px;
   border: none;
   font-size: 1em;
-  background-color: #878787;
+  background-color: #2d2d2d;
+  /* 深色按钮背景 */
   border-radius: 0;
-  color: #ecf5ff;
+  color: #d4d4d4;
+  /* 按钮文字颜色 */
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
 .clearConsoleButton:hover {
-  color: #31ffe7;
+  color: #569cd6;
   /* 鼠标悬停时的颜色 */
   transition: background-color 0.3s ease;
 }
+
+
+.physics-settings-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collapse {
+  flex: 1;
+  width: 100%;
+}
+
+.custom-title {
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2196f3;
+  /* 蓝色 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#config {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #f1faff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vis-configuration-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.vis-configuration-wrapper h3{
+  padding: 0;
+  margin: 0;
+}
+
+.vis-configuration {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0;
+  margin: 0;
+}
+
+.vis-config-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.vis-config-label {
+  flex: 1;
+  font-size: 1em;
+  color: #34495e;
+}
+
+.vis-config-range,
+.vis-config-rangeinput,
+.vis-config-select {
+  width: 100%;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 0.9em;
+}
+
+.vis-config-item{
+  display: flex;
+}
+
+.vis-config-range {
+  flex: 3;
+}
+
+.vis-config-rangeinput {
+  flex: 1;
+  width: 20px;
+}
+
+.vis-config-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.vis-config-button {
+  padding: 0;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.vis-config-button:hover {
+  background-color: #2980b9;
+}
+
+/* 增强样式 */
+.vis-configuration-wrapper {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.vis-config-item {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px #ddd;
+}
+
+.vis-config-item:hover {
+  box-shadow: inset 0 0 0 1px #ccc;
+}
+
+/* 增加一些间距和对齐 */
+.vis-config-label {
+  flex: 1;
+}
+
+.vis-config-range,
+.vis-config-rangeinput,
+.vis-config-select {
+  flex: 2;
+}
+
+
+
+
+
 
 .introduction {
   background-color: #ffffff;
@@ -407,20 +543,6 @@ header h1 {
   border-top: 1px solid #eaeaea;
 }
 
-.footer-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer-link p a {
-  margin: 1rem;
-}
-
-.footer p {
-  margin: 5px 0;
-}
-
 .footer a {
   color: #007bff;
   text-decoration: none;
@@ -430,6 +552,29 @@ header h1 {
   text-decoration: underline;
 }
 
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.footer ul li {
+  margin: 0 10px;
+}
+
+.footer ul li a {
+  color: rgb(46, 46, 46);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.footer ul li a:hover {
+  color: #63a2ff;
+}
 
 /* 媒体查询：竖屏模式 */
 @media (orientation: portrait) {
@@ -438,8 +583,13 @@ header h1 {
   }
 
   .content1,
-  .content2,
+  .content2 {
+    width: 100%;
+    margin: 10px 0;
+  }
+
   .content3 {
+    max-width: 100%;
     width: 100%;
     margin: 10px 0;
   }

@@ -6,13 +6,12 @@
           <img src="https://gd-hbimg.huaban.com/1a889cfd89caecf4325e9310a3cc6728f4c5d730dddbb-G0mRDe_fw1200webp" alt="">
         </div>
         <div class="logo">
-          <h1>二期辅助诊断系统</h1>
+          <h1>面向Parkinson症的数字医学辅助诊断系统</h1>
         </div>
         <nav class="nav-menu">
           <ul>
             <li><a href="/">首页</a></li>
             <li><a href="/diagnosis">诊断工具</a></li>
-            <li><a href="/">数据管理</a></li>
             <li><a href="/Description">关于系统</a></li>
           </ul>
         </nav>
@@ -22,16 +21,20 @@
     <div class="carousel">
       <div class="carousel-inner" ref="carouselInner">
         <div class="carousel-item active">
-          <img src="../assets/Fig1-DiagramM2GMC-6.jpg" alt="Image 1">
+          <p>M2GMC-高阶通信张量用于脑疾病进展预测分析</p>
+          <img src="../assets/Fig1-DiagramM2GMC-6.jpg" title="M2GMC-高阶通信张量用于脑疾病进展预测分析" alt="Image 1">
         </div>
         <div class="carousel-item">
-          <img src="../assets/Fig1-FrameworkSTPD.jpg" alt="Image 2">
+          <p>M2STGAT-时空图计算在帕金森分类的应用</p>
+          <img src="../assets/Fig1-FrameworkSTPD.jpg" title="M2STGAT-时空图计算在帕金森分类的应用" alt="Image 2">
         </div>
         <div class="carousel-item">
-          <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" alt="Image 3">
+          <p>DualGCN-双视角图卷积模型在疾病亚型识别</p>
+          <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" title="DualGCN-双视角图卷积模型在疾病亚型识别" alt="Image 3">
         </div>
         <div class="carousel-item">
-          <img src="../assets/Fig2-STembeddings.jpg" alt="Image 4">
+          <p>M2STGAT-时空联合嵌入的构造</p>
+          <img src="../assets/Fig2-STembeddings.jpg" title="M2STGAT-时空联合嵌入的构造" alt="Image 4">
         </div>
       </div>
       <div class="carousel-indicators">
@@ -57,9 +60,9 @@
       <h3>All about this</h3>
       <h3>please contanct with us.</h3>
       <ul>
-        <li><a href="" title="背景情况介绍">Background</a></li>
-        <li><a href="/Description" title="辅助诊断AI系统简介">Description</a></li>
-        <li><a href="/diagnosis" title="数据测试">Diagnosis</a></li>
+        <li><a href="/" title="首页">首页</a></li>
+        <li><a href="/diagnosis" title="诊断工具">诊断工具</a></li>
+        <li><a href="/Description" title="关于系统">关于系统</a></li>
       </ul>
       <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
       <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>

@@ -13,7 +13,6 @@
           <ul>
             <li><a href="/">首页</a></li>
             <li><a href="/diagnosis">诊断工具</a></li>
-            <li><a href="/">数据管理</a></li>
             <li><a href="/Description">关于系统</a></li>
           </ul>
         </nav>
@@ -62,12 +61,12 @@
               <!-- 绘制邻接表 -->
               <div class="container_2">
                 <!-- 处理基因文件 -->
-                <el-button class="btn" type="primary" @click="processGene"
-                  v-loading="processingGene">挑选基因</el-button>
+                <el-button class="btn" type="primary" @click="processGene" v-loading="processingGene">挑选基因</el-button>
                 <!-- 获取PFN邻接表 -->
                 <!-- <el-button class="btn" type="primary" @click="getPFNChart"
                   v-loading="gettingPFNChart">PFN推理</el-button> -->
-                <el-button class="btn btn1" type="primary" @click="moduleCluster" v-loading="clustering">子图划分</el-button>
+                <el-button class="btn btn1" type="primary" @click="moduleCluster"
+                  v-loading="clustering">子图划分</el-button>
                 <!-- 邻接矩阵转化 -->
                 <el-button class="btn btn1" type="primary" @click="createAdjMatrix"
                   v-loading="createing_Adj">启动ai微服务</el-button>
@@ -76,6 +75,23 @@
           </div>
         </div>
         <div class="content2">
+          <!-- 添加图谱控制功能 -->
+          <!-- <div id="select-menu" class="card-header">
+            <div class="row no-gutters">
+              <div class="col-10 pb-2">
+                <select class="form-select" aria-label="Default select example" onchange="selectNode([value]);"
+                  id="select-node" placeholder="Select node...">
+                  <option selected>Select a Node by ID</option>
+                  动态生成的选项 -->
+          <!-- </select>
+              </div>
+              <div class="col-2 pb-2">
+                <button type="button" class="btn btn-primary btn-block"
+                  onclick="neighbourhoodHighlight({nodes: []});">Reset
+                  Selection</button>
+              </div>
+            </div>
+          </div> -->
           <div id="mynetwork"></div>
         </div>
         <div class="content3">
@@ -96,13 +112,107 @@
             <h3>Console</h3>
             <div class="console-content" id="consoleContent" ref="consoleBody">
               <!-- 日志信息将在这里动态显示 -->
-              <div v-for="(message, index) in consoleMessages" :key="index" class="log-item">
-                {{ message }}
+              <div v-for="(message, index) in consoleMessages" :key="index" class="log-item" :class="message">
+                {{ message}}
               </div>
             </div>
             <el-button class="clearConsoleButton" @click="clearConsole()">Clear all log information</el-button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="physics-settings">
+      <div class="physics-settings-header">
+        <div></div>
+        <el-collapse v-model="activeNames" @change="handleChange" class="collapse">
+          <el-collapse-item>
+            <template #title>
+              <div class="custom-title">
+                Physics Settings
+              </div>
+            </template>
+            <div id="config">
+              <div class="vis-configuration-wrapper">
+                <h3>forceAtlas2Based:</h3>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">theta:</div>
+                  <input id="forceAtlas2Based-theta" class="vis-configuration vis-config-range" type="range" min="0.1"
+                    max="1" step="0.05">
+                  <input id="forceAtlas2Based-theta-value" class="vis-configuration vis-config-rangeinput" value="0.1"
+                    readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">gravitationalConstant:</div>
+                  <input id="gravitational-constant" class="vis-configuration vis-config-range" type="range" min="-500"
+                    max="0" step="1">
+                  <input id="gravitational-constant-value" class="vis-configuration vis-config-rangeinput" value="-500"
+                    readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">centralGravity:</div>
+                  <input id="central-gravity" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                    step="0.005">
+                  <input id="central-gravity-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">springLength:</div>
+                  <input id="spring-length" class="vis-configuration vis-config-range" type="range" min="0" max="500"
+                    step="5">
+                  <input id="spring-length-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">springConstant:</div>
+                  <input id="spring-constant" class="vis-configuration vis-config-range" type="range" min="0" max="1.2"
+                    step="0.005">
+                  <input id="spring-constant-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">damping:</div>
+                  <input id="damping" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                    step="0.01">
+                  <input id="damping-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">avoidOverlap:</div>
+                  <input id="avoid-overlap" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                    step="0.01">
+                  <input id="avoid-overlap-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s2">
+                  <div class="vis-configuration vis-config-label vis-config-s2">maxVelocity:</div>
+                  <input id="max-velocity" class="vis-configuration vis-config-range" type="range" min="0" max="150"
+                    step="1">
+                  <input id="max-velocity-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s2">
+                  <div class="vis-configuration vis-config-label vis-config-s2">minVelocity:</div>
+                  <input id="min-velocity" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
+                    step="0.01">
+                  <input id="min-velocity-value" class="vis-configuration vis-config-rangeinput" value="0.01" readonly>
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s2">
+                  <div class="vis-configuration vis-config-label vis-config-s2">timestep:</div>
+                  <input id="timestep" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
+                    step="0.01">
+                  <input id="timestep-value" class="vis-configuration vis-config-rangeinput" value="0.01" readonly>
+                </div>
+                <h3>wind:</h3>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">x:</div><input id="x"
+                    class="vis-configuration vis-config-range" type="range" min="-10" max="10" step="0.1"><input
+                    id="x-value" class="vis-configuration vis-config-rangeinput">
+                </div>
+                <div class="vis-configuration vis-config-item vis-config-s3">
+                  <div class="vis-configuration vis-config-label vis-config-s3">y:</div><input id="y"
+                    class="vis-configuration vis-config-range" type="range" min="-10" max="10" step="0.1"><input
+                    id="y-value" class="vis-configuration vis-config-rangeinput">
+                </div>
+              </div>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+        <div></div>
       </div>
     </div>
 
@@ -120,10 +230,11 @@
     </div>
     <!-- 页面底部信息 -->
     <div class="footer">
-      <div class="footer-link">
-        <p><a href="/" title="首页">Index</a></p>
-        <p><a href="/Description" title="辅助诊断AI系统简介">Description</a></p>
-      </div>
+      <ul>
+        <li><a href="/" title="首页">首页</a></li>
+        <li><a href="/diagnosis" title="诊断工具">诊断工具</a></li>
+        <li><a href="/Description" title="关于系统">关于系统</a></li>
+      </ul>
       <p>Copyright © 2025.zstu.digital medicine All rights reserved.</p>
       <a href="https://beian.miit.gov.cn/" target="_blank" style="color: black">浙ICP备2025162002号-1</a>
       <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank" class="report-link"
@@ -151,6 +262,7 @@ import uploaDia from './uploaDia.vue';
 import { FileApi } from '../../api/Diagnosis/Diagnosis';
 import { nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
+import type { CollapseModelValue } from 'element-plus'
 // import { da } from 'element-plus/es/locales.mjs';
 const uid = ref('2025')
 const fileName = ref('未选择文件')//暂存上传的文件名
@@ -160,7 +272,7 @@ const createing_Adj = ref(false)//getChart状态工具
 const clustering = ref(false)//cluster状态工具
 const progressBar = ref('0')//进度条工具
 const uploadRef = ref()
-const consoleMessages = ref(['欢迎使用本系统'])//console台文本工具
+const consoleMessages = ref(['>欢迎使用本系统'])//console台文本工具
 
 
 // 定义全局的 nodes 和 edges
@@ -178,6 +290,11 @@ const edges = new DataSet([
   { from: 2, to: 4 },
   { from: 2, to: 5, type: 'c1_4' }
 ])
+
+const activeNames = ref(['1'])
+const handleChange = (val: CollapseModelValue) => {
+  console.log(val)
+}
 
 //打开upload弹窗
 const openUpload = (tool: string) => {
@@ -296,9 +413,9 @@ const createAdjMatrix = async () => {
 
 //加载文件
 const loadFile = async (tool: string) => {
-  if(tool){
-    fileName.value=tool
-    console.log('已选择测试文件：',fileName)
+  if (tool) {
+    fileName.value = tool
+    console.log('已选择测试文件：', fileName)
   }
 };
 //绘画图表
@@ -373,13 +490,13 @@ const moduleCluster = async () => {
     console.log('请先上传文件')
     return;
   }
-  try{  //获取文件名
+  try {  //获取文件名
     let lastDotIndex: number = fileName.value.lastIndexOf('.');
     let newFilename: string = fileName.value.slice(0, lastDotIndex) + '_1000_PFN' + fileName.value.substring(lastDotIndex);
     let newFilename_: string = fileName.value.slice(0, lastDotIndex) + '_1000_PFN_modules' + fileName.value.substring(lastDotIndex);
     console.log('moduleCluster for:', newFilename)
     //进行聚类
-    clustering.value=true
+    clustering.value = true
     ElMessage.success('正在绘制聚类图谱~')
     const res: any = await FileApi.moduleCluster(newFilename, uid.value)
     console.log('res:', res)
@@ -392,10 +509,10 @@ const moduleCluster = async () => {
     console.log('res:', respone)
     //绘制图谱
     await drawChart(respone.data)
-  }catch(error){
+  } catch (error) {
     ElMessage.error('无法绘制聚类图谱~')
-  }finally{
-    clustering.value=false
+  } finally {
+    clustering.value = false
   }
 }
 //调用模型预测
@@ -499,7 +616,9 @@ window.onload = function () {
         damping: 0.4,
         gravitationalConstant: -31,
         springConstant: 0.08,
-        springLength: 100
+        springLength: 100,
+        windX: 0,
+        windY: 0,
       },
       solver: "forceAtlas2Based",
       stabilization: {
@@ -507,7 +626,22 @@ window.onload = function () {
         fit: true,
         iterations: 1000,
         onlyDynamicEdges: false,
-        updateInterval: 50
+        updateInterval: 50,
+        callback: function (iteration: number) {
+          const nodes = network.body.nodes;
+          const windX = 0.3; // 风力在X方向的分量
+          const windY = 0.3; // 风力在Y方向的分量
+
+          for (const nodeId in nodes) {
+            const node = nodes[nodeId];
+            node.x += windX;
+            node.y += windY;
+          }
+
+          // 更新节点位置
+          network.update({ nodes: nodes });
+        }
+
       }
     },
     interaction: {
@@ -516,7 +650,6 @@ window.onload = function () {
       hideNodesOnDrag: false
     }
   };
-
 
   document.getElementById('csvUpload')?.addEventListener('change', function (event) {
     // 类型断言：告诉 TypeScript event.target 实际上是 HTMLInputElement 类型
@@ -565,6 +698,96 @@ window.onload = function () {
       alert('error');
     }
   });
+
+  const updatePhysicsSettings = () => {
+    const thetaElement = document.getElementById('forceAtlas2Based-theta') as HTMLInputElement | null;
+    const gravitationalConstantElement = document.getElementById('gravitational-constant') as HTMLInputElement | null;
+    const centralGravityElement = document.getElementById('central-gravity') as HTMLInputElement | null;
+    const springLengthElement = document.getElementById('spring-length') as HTMLInputElement | null;
+    const springConstantElement = document.getElementById('spring-constant') as HTMLInputElement | null;
+    const dampingElement = document.getElementById('damping') as HTMLInputElement | null;
+    const maxVelocityElement = document.getElementById('max-velocity') as HTMLInputElement | null;
+    const minVelocityElement = document.getElementById('min-velocity') as HTMLInputElement | null;
+    const timestepElement = document.getElementById('timestep') as HTMLInputElement | null;
+    const windXElement = document.getElementById('x') as HTMLInputElement | null;
+    const windYElement = document.getElementById('y') as HTMLInputElement | null;
+
+    if (
+      thetaElement &&
+      gravitationalConstantElement &&
+      centralGravityElement &&
+      springLengthElement &&
+      springConstantElement &&
+      dampingElement &&
+      maxVelocityElement &&
+      minVelocityElement &&
+      timestepElement &&
+      windXElement &&
+      windYElement
+    ) {
+      const theta = parseFloat(thetaElement.value);
+      const gravitationalConstant = parseFloat(gravitationalConstantElement.value);
+      const centralGravity = parseFloat(centralGravityElement.value);
+      const springLength = parseFloat(springLengthElement.value);
+      const springConstant = parseFloat(springConstantElement.value);
+      const damping = parseFloat(dampingElement.value);
+      const maxVelocity = parseFloat(maxVelocityElement.value);
+      const minVelocity = parseFloat(minVelocityElement.value);
+      const timestep = parseFloat(timestepElement.value);
+      const windX = parseFloat(windXElement.value);
+      const windY = parseFloat(windYElement.value);
+
+      console.log('Updated physics settings:', {
+        theta,
+        gravitationalConstant,
+        centralGravity,
+        springLength,
+        springConstant,
+        damping,
+        maxVelocity,
+        minVelocity,
+        timestep,
+        wind: { x: windX, y: windY }
+      });
+      network.setOptions({
+        physics: {
+          forceAtlas2Based: {
+            theta: theta,
+            gravitationalConstant: gravitationalConstant,
+            centralGravity: centralGravity,
+            springLength: springLength,
+            springConstant: springConstant,
+            damping: damping,
+          },
+          maxVelocity: maxVelocity,
+          minVelocity: minVelocity,
+          timestep: timestep,
+          wind: { x: windX, y: windY } // 添加 wind 设置
+        },
+      });
+      // 自定义逻辑：更新节点位置以模拟风力效果
+      const nodes = network.body.nodes;
+      for (const nodeId in nodes) {
+        const node = nodes[nodeId];
+        node.x += windX;
+        node.y += windY;
+      }
+      network.update({ nodes: nodes }); // 更新节点位置
+    } else {
+      console.error('Some elements are not found');
+    }
+  };
+
+  // 绑定滑动条的 input 事件
+  document.querySelectorAll('.vis-configuration .vis-config-range').forEach((rangeInput) => {
+    const valueInput = document.getElementById(`${rangeInput.id}-value`) as HTMLInputElement | null;
+    if (valueInput) {
+      rangeInput.addEventListener('input', () => {
+        valueInput.value = (rangeInput as HTMLInputElement).value;
+        updatePhysicsSettings(); // 调用 updatePhysicsSettings 函数
+      });
+    }
+  });
 };
 let eventSource: any//SSE实例
 //连接SSE
@@ -575,7 +798,7 @@ const ConnectSSE = () => {
   eventSource.onopen = function () {
     console.log('SSE链接成功,uid:', uid.value);
   }
-  eventSource.onmessage = function (event:any) {
+  eventSource.onmessage = function (event: any) {
     if (event.data) {
       console.log(event.data)
       consoleMessages.value.push(`> ${event.data}`)
@@ -603,12 +826,9 @@ const scrollToBottom = () => {
     }
   });
 };
-// 定义响应式数据
-const logs = ref<string[]>([]);
-
 // 清除所有日志的方法
 const clearConsole = () => {
-  logs.value = []; // 清空日志数组
+  consoleMessages.value = ['>欢迎使用本系统']; // 清空日志数组
   console.log('Console cleared.'); // 在控制台输出清除日志的提示
 };
 

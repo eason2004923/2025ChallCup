@@ -142,6 +142,13 @@ header h1 {
   display: block;
 }
 
+.carousel-item p{
+  margin: 10px 0;
+  /* 图片下方的文字描述 */
+  font-size: 1.5rem;
+  color: #333;
+}
+
 .carousel-indicators {
   position: absolute;
   bottom: 10px;

@@ -55,7 +55,7 @@
               <h3>File Upload and Processing Data</h3>
               <div class="container_1">
                 <el-button class="upload-btn" type="primary" size="large" @click="openUpload('.csv')"
-                  v-loading="uploading">upload</el-button>
+                  v-loading="uploading">Upload</el-button>
                 <span>{{ fileName }}</span>
               </div>
               <!-- 绘制邻接表 -->
@@ -137,76 +137,76 @@
                 <h3>forceAtlas2Based:</h3>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">theta:</div>
-                  <input id="forceAtlas2Based-theta" class="vis-configuration vis-config-range" type="range" min="0.1"
+                  <input id="forceAtlas2Based-theta" class="vis-configuration vis-config-range" type="range" min="0.1" value="0.1"
                     max="1" step="0.05">
                   <input id="forceAtlas2Based-theta-value" class="vis-configuration vis-config-rangeinput" value="0.1"
                     readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">gravitationalConstant:</div>
-                  <input id="gravitational-constant" class="vis-configuration vis-config-range" type="range" min="-500"
+                  <input id="gravitational-constant" class="vis-configuration vis-config-range" type="range" min="-500" value="-31"
                     max="0" step="1">
-                  <input id="gravitational-constant-value" class="vis-configuration vis-config-rangeinput" value="-500"
+                  <input id="gravitational-constant-value" class="vis-configuration vis-config-rangeinput" value="-31"
                     readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">centralGravity:</div>
-                  <input id="central-gravity" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                  <input id="central-gravity" class="vis-configuration vis-config-range" type="range" min="0" max="1" value="0.015"
                     step="0.005">
-                  <input id="central-gravity-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                  <input id="central-gravity-value" class="vis-configuration vis-config-rangeinput" value="0.015" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">springLength:</div>
-                  <input id="spring-length" class="vis-configuration vis-config-range" type="range" min="0" max="500"
+                  <input id="spring-length" class="vis-configuration vis-config-range" type="range" min="0" max="500" value="100"
                     step="5">
-                  <input id="spring-length-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                  <input id="spring-length-value" class="vis-configuration vis-config-rangeinput" value="100" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">springConstant:</div>
-                  <input id="spring-constant" class="vis-configuration vis-config-range" type="range" min="0" max="1.2"
+                  <input id="spring-constant" class="vis-configuration vis-config-range" type="range" min="0" max="1.2" value="0.08"
                     step="0.005">
-                  <input id="spring-constant-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                  <input id="spring-constant-value" class="vis-configuration vis-config-rangeinput" value="0.08" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">damping:</div>
-                  <input id="damping" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                  <input id="damping" class="vis-configuration vis-config-range" type="range" min="0" max="1" value="0.4"
                     step="0.01">
-                  <input id="damping-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                  <input id="damping-value" class="vis-configuration vis-config-rangeinput" value="0.4" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">avoidOverlap:</div>
-                  <input id="avoid-overlap" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                  <input id="avoid-overlap" class="vis-configuration vis-config-range" type="range" min="0" max="1" value="0"
                     step="0.01">
                   <input id="avoid-overlap-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s2">
-                  <div class="vis-configuration vis-config-label vis-config-s2">maxVelocity:</div>
-                  <input id="max-velocity" class="vis-configuration vis-config-range" type="range" min="0" max="150"
+                  <div class="vis-configuration vis-config-label vis-config-s2">maxVelocity:</div> 
+                  <input id="max-velocity" class="vis-configuration vis-config-range" type="range" min="0" max="150" value="50"
                     step="1">
-                  <input id="max-velocity-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
+                  <input id="max-velocity-value" class="vis-configuration vis-config-rangeinput" value="50" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s2">
                   <div class="vis-configuration vis-config-label vis-config-s2">minVelocity:</div>
-                  <input id="min-velocity" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
+                  <input id="min-velocity" class="vis-configuration vis-config-range" type="range" min="0.01" max="1" value="0.75"
                     step="0.01">
-                  <input id="min-velocity-value" class="vis-configuration vis-config-rangeinput" value="0.01" readonly>
+                  <input id="min-velocity-value" class="vis-configuration vis-config-rangeinput" value="0.75" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s2">
                   <div class="vis-configuration vis-config-label vis-config-s2">timestep:</div>
-                  <input id="timestep" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
+                  <input id="timestep" class="vis-configuration vis-config-range" type="range" min="0.01" max="1" value="0.5"
                     step="0.01">
-                  <input id="timestep-value" class="vis-configuration vis-config-rangeinput" value="0.01" readonly>
+                  <input id="timestep-value" class="vis-configuration vis-config-rangeinput" value="0.5" readonly>
                 </div>
                 <h3>wind:</h3>
                 <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class="vis-configuration vis-config-label vis-config-s3">x:</div><input id="x"
-                    class="vis-configuration vis-config-range" type="range" min="-10" max="10" step="0.1"><input
-                    id="x-value" class="vis-configuration vis-config-rangeinput">
+                  <div class=" vis-config-label vis-config-s3">x:</div><input id="x"
+                    class=" vis-config-range" type="range" min="-10" max="10" step="0.1" value="0"><input
+                    id="x-value" class=" vis-config-rangeinput" value="0"  readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class="vis-configuration vis-config-label vis-config-s3">y:</div><input id="y"
-                    class="vis-configuration vis-config-range" type="range" min="-10" max="10" step="0.1"><input
-                    id="y-value" class="vis-configuration vis-config-rangeinput">
+                  <div class=" vis-config-label vis-config-s3">y:</div><input id="y"
+                    class=" vis-config-range" type="range" min="-10" max="10" step="0.1" value="0"><input
+                    id="y-value" class=" vis-config-rangeinput" value="0"  readonly>
                 </div>
               </div>
             </div>
@@ -223,7 +223,7 @@
           <li>
             <el-card shadow="hover" style="padding-left: 1rem; padding-right: 1rem;"><a href="/"
                 title="前往数据测试页面">首页</a></el-card>
-            <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">系统简介</a></el-card>
+            <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">关于系统</a></el-card>
           </li>
         </ul>
       </nav>
@@ -277,11 +277,11 @@ const consoleMessages = ref(['>欢迎使用本系统'])//console台文本工具
 
 // 定义全局的 nodes 和 edges
 const nodes = new DataSet([
-  { id: 1, label: 'Node 1' },
-  { id: 2, label: 'Node 2' },
-  { id: 3, label: 'Node 3' },
-  { id: 4, label: 'Node 4' },
-  { id: 5, label: 'Node 5' }
+  { id: 1, label: 'Step3:子图划分' },
+  { id: 2, label: 'Step2:挑选基因' },
+  { id: 3, label: 'Step4:启动ai微服务' },
+  { id: 4, label: 'Step1:Upload File' },
+  { id: 5, label: 'Step1:Select Test File' }
 ])
 
 const edges = new DataSet([
@@ -629,8 +629,8 @@ window.onload = function () {
         updateInterval: 50,
         callback: function (iteration: number) {
           const nodes = network.body.nodes;
-          const windX = 0.3; // 风力在X方向的分量
-          const windY = 0.3; // 风力在Y方向的分量
+          const windX = 2; // 风力在X方向的分量
+          const windY = 2; // 风力在Y方向的分量
 
           for (const nodeId in nodes) {
             const node = nodes[nodeId];
@@ -640,8 +640,8 @@ window.onload = function () {
 
           // 更新节点位置
           network.update({ nodes: nodes });
+          console.log('callback:',iteration);
         }
-
       }
     },
     interaction: {

@@ -21,20 +21,20 @@
     <div class="carousel">
       <div class="carousel-inner" ref="carouselInner">
         <div class="carousel-item active">
+          <img src="../assets/Fig1-DiagramM2GMC-6.jpg" title="M2GMC-高阶通信张量用于脑疾病进展预测分析" alt="Image 1" style="width: 55%;">
           <p>M2GMC-高阶通信张量用于脑疾病进展预测分析</p>
-          <img src="../assets/Fig1-DiagramM2GMC-6.jpg" title="M2GMC-高阶通信张量用于脑疾病进展预测分析" alt="Image 1">
         </div>
         <div class="carousel-item">
+          <img src="../assets/Fig1-FrameworkSTPD.jpg" title="M2STGAT-时空图计算在帕金森分类的应用" alt="Image 2"style="width: 82%;">
           <p>M2STGAT-时空图计算在帕金森分类的应用</p>
-          <img src="../assets/Fig1-FrameworkSTPD.jpg" title="M2STGAT-时空图计算在帕金森分类的应用" alt="Image 2">
         </div>
         <div class="carousel-item">
+          <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" title="DualGCN-双视角图卷积模型在疾病亚型识别" alt="Image 3" style="width: 70%;">
           <p>DualGCN-双视角图卷积模型在疾病亚型识别</p>
-          <img src="../assets/Fig1_DualGCN-Framework-v3.jpg" title="DualGCN-双视角图卷积模型在疾病亚型识别" alt="Image 3">
         </div>
         <div class="carousel-item">
-          <p>M2STGAT-时空联合嵌入的构造</p>
           <img src="../assets/Fig2-STembeddings.jpg" title="M2STGAT-时空联合嵌入的构造" alt="Image 4">
+          <p>M2STGAT-时空联合嵌入的构造</p>
         </div>
       </div>
       <div class="carousel-indicators">
@@ -49,8 +49,8 @@
       <nav>
         <ul>
           <li>
-            <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">系统简介</a></el-card>
-            <el-card shadow="hover"><a href="/diagnosis" title="前往数据测试页面">数据测试</a></el-card>
+            <el-card shadow="hover"><a href="/Description" title="辅助诊断AI系统简介">关于系统</a></el-card>
+            <el-card shadow="hover"><a href="/diagnosis" title="前往数据测试页面">诊断工具</a></el-card>
           </li>
         </ul>
       </nav>

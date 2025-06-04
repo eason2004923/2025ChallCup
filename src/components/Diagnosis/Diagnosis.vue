@@ -61,15 +61,15 @@
               <!-- 绘制邻接表 -->
               <div class="container_2">
                 <!-- 处理基因文件 -->
-                <el-button class="btn" type="primary" @click="processGene" v-loading="processingGene">挑选基因</el-button>
+                <el-button class="btn" type="primary" @click="processGene" v-loading="processingGene">基因挑选及图谱分析</el-button>
                 <!-- 获取PFN邻接表 -->
                 <!-- <el-button class="btn" type="primary" @click="getPFNChart"
                   v-loading="gettingPFNChart">PFN推理</el-button> -->
                 <el-button class="btn btn1" type="primary" @click="moduleCluster"
                   v-loading="clustering">子图划分</el-button>
                 <!-- 邻接矩阵转化 -->
-                <el-button class="btn btn1" type="primary" @click="createAdjMatrix"
-                  v-loading="createing_Adj">启动ai微服务</el-button>
+                <el-button class="btn btn1" type="primary" @click="onPredict"
+                  v-loading="predicting">启动ai微服务</el-button>
               </div>
             </div>
           </div>
@@ -101,6 +101,7 @@
             <div class="node-info">
               <p>Total genes: <span id="node2">{{total_genes}}</span></p>
               <p>Total edges: <span id="node1">{{total_edges}}</span></p>
+              <p><span id="node1" v-if="CellStage!=-1">共有{{CellStage}}个细胞处于stage 2</span></p>
               <!-- <el-table :data="module" style="width: 100%">
                 <el-table-column prop="name" label="Name" width="180" />
                 <el-table-column prop="color" label="Color" width="180" />
@@ -268,8 +269,9 @@ const uid = ref('2025')
 const fileName = ref('未选择文件')//暂存上传的文件名
 const uploading = ref(false)//upload状态工具
 const processingGene = ref(false)//processGene状态工具
-const createing_Adj = ref(false)//getChart状态工具
+const predicting = ref(false)//onPredict状态工具
 const clustering = ref(false)//cluster状态工具
+const CellStage = ref(-1)//onPredict结果状态工具
 const progressBar = ref('0')//进度条工具
 const uploadRef = ref()
 const consoleMessages = ref(['>欢迎使用本系统'])//console台文本工具
@@ -341,18 +343,18 @@ const processGene = async () => {
   }
 }
 //获取邻接矩阵
-const createAdjMatrix = async () => {
+const onPredict = async () => {
   try {
+    predicting.value=true
     // //处理M12
-    const res12=await FileApi.selectGene('PPMI-data_M12.csv', uid.value, '1000')
-    console.log('selectGene success,res:', res12)
-    console.log('createGeneMap for file:', 'PPMI-data_M12_1000.csv')
-    const res_1 = await FileApi.createGeneMap('PPMI-data_M12_1000.csv', uid.value)
-    console.log('createGeneMap success,res:', res_1)
-    console.log('createing_Adj...')
-    createing_Adj.value = true
-    const res_adj1 = await FileApi.createAdjMatrix('Data_Correlation.txt','M12', uid.value)
-    console.log('success getChart,res:', res_adj1)
+    // const res12=await FileApi.selectGene('PPMI-data_M12.csv', uid.value, '1000')
+    // console.log('selectGene success,res:', res12)
+    // console.log('createGeneMap for file:', 'PPMI-data_M12_1000.csv')
+    // const res_1 = await FileApi.createGeneMap('PPMI-data_M12_1000.csv', uid.value)
+    // console.log('createGeneMap success,res:', res_1)
+    // console.log('createing_Adj...')
+    // const res_adj1 = await FileApi.createAdjMatrix('Data_Correlation.txt','M12', uid.value)
+    // console.log('success getChart,res:', res_adj1)
     // // //处理M24
     // const res24=await FileApi.selectGene('PPMI-data_M24.csv', uid.value, '1000')
     // console.log('selectGene success,res:', res24)    
@@ -360,7 +362,6 @@ const createAdjMatrix = async () => {
     // const res_2 = await FileApi.createGeneMap('PPMI-data_M24_1000.csv', uid.value)
     // console.log('createGeneMap success,res:', res_2)
     // console.log('createing_Adj...')
-    // createing_Adj.value = true
     // const res_adj2 = await FileApi.createAdjMatrix('Data_Correlation.txt','M24', uid.value)
     // console.log('success getChart,res:', res_adj2)
     // //处理M36
@@ -370,16 +371,21 @@ const createAdjMatrix = async () => {
     // const res_3 = await FileApi.createGeneMap('PPMI-data_M36_1000.csv', uid.value)
     // console.log('createGeneMap success,res:', res_3)
     // console.log('createing_Adj...')
-    // createing_Adj.value = true
     // const res_adj3 = await FileApi.createAdjMatrix('Data_Correlation.txt','M36', uid.value)
     // console.log('success getChart,res:', res_adj3)
-    predictMoudle();//调用模型预测
+    //调用模型预测
+    console.log('开始调用模型预测')
+    const perdict_res = await FileApi.predictMoudle(uid.value)
+    console.log('perdict_res',perdict_res)
+    CellStage.value=perdict_res?.data.data.PredictInfo.ResultDistribution[2]
+    console.log('CellS',CellStage.value)
+    ElMessage.success('模型预测成功!')
     progressBar.value = '100'
   } catch (error) {
     progressBar.value = '50'
-    ElMessage.error(`createing_Adj error:${error}`)
+    ElMessage.error(`predicting error:${error}`)
   } finally {
-    createing_Adj.value = false
+    predicting.value = false
   }
 }
 //获取PFN邻接矩阵
@@ -525,7 +531,7 @@ const predictMoudle = async () => {
   }catch(error){
     ElMessage.error('调用模型预测失败')
   }finally{
-    clustering.value=false
+    predicting.value=false
   }
 }
 // 动态更新节点颜色
@@ -793,7 +799,7 @@ let eventSource: any//SSE实例
 //连接SSE
 const ConnectSSE = () => {
   CloseSSE();
-  uid.value = '2025'
+  uid.value = creRanStr();
   eventSource = new EventSource(`https://www.dementiaai.cn/backside/sse/createSse?uid=${uid.value}`);
   eventSource.onopen = function () {
     console.log('SSE链接成功,uid:', uid.value);
@@ -831,9 +837,12 @@ const clearConsole = () => {
   consoleMessages.value = ['>欢迎使用本系统']; // 清空日志数组
   console.log('Console cleared.'); // 在控制台输出清除日志的提示
 };
-
+//生成随机uid
+const creRanStr=()=>{
+  let ran_num=Math.floor(Math.random()*100);
+  return (''+ran_num)
+}
 onMounted(() => {
-  // FileApi.connectSSE('2025');
   //自动连接SSE
   ConnectSSE();
 })

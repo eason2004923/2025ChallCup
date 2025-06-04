@@ -114,7 +114,7 @@
             <div class="console-content" id="consoleContent" ref="consoleBody">
               <!-- 日志信息将在这里动态显示 -->
               <div v-for="(message, index) in consoleMessages" :key="index" class="log-item" :class="message">
-                {{ message}}
+                {{ message }}
               </div>
             </div>
             <el-button class="clearConsoleButton" @click="clearConsole()">Clear all log information</el-button>
@@ -138,76 +138,78 @@
                 <h3>forceAtlas2Based:</h3>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">theta:</div>
-                  <input id="forceAtlas2Based-theta" class="vis-configuration vis-config-range" type="range" min="0.1" value="0.1"
-                    max="1" step="0.05">
+                  <input id="forceAtlas2Based-theta" class="vis-configuration vis-config-range" type="range" min="0.1"
+                    value="0.1" max="1" step="0.05">
                   <input id="forceAtlas2Based-theta-value" class="vis-configuration vis-config-rangeinput" value="0.1"
                     readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">gravitationalConstant:</div>
-                  <input id="gravitational-constant" class="vis-configuration vis-config-range" type="range" min="-500" value="-31"
-                    max="0" step="1">
+                  <input id="gravitational-constant" class="vis-configuration vis-config-range" type="range" min="-500"
+                    value="-31" max="0" step="1">
                   <input id="gravitational-constant-value" class="vis-configuration vis-config-rangeinput" value="-31"
                     readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">centralGravity:</div>
-                  <input id="central-gravity" class="vis-configuration vis-config-range" type="range" min="0" max="1" value="0.015"
-                    step="0.005">
-                  <input id="central-gravity-value" class="vis-configuration vis-config-rangeinput" value="0.015" readonly>
+                  <input id="central-gravity" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                    value="0.015" step="0.005">
+                  <input id="central-gravity-value" class="vis-configuration vis-config-rangeinput" value="0.015"
+                    readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">springLength:</div>
-                  <input id="spring-length" class="vis-configuration vis-config-range" type="range" min="0" max="500" value="100"
-                    step="5">
+                  <input id="spring-length" class="vis-configuration vis-config-range" type="range" min="0" max="500"
+                    value="100" step="5">
                   <input id="spring-length-value" class="vis-configuration vis-config-rangeinput" value="100" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">springConstant:</div>
-                  <input id="spring-constant" class="vis-configuration vis-config-range" type="range" min="0" max="1.2" value="0.08"
-                    step="0.005">
-                  <input id="spring-constant-value" class="vis-configuration vis-config-rangeinput" value="0.08" readonly>
+                  <input id="spring-constant" class="vis-configuration vis-config-range" type="range" min="0" max="1.2"
+                    value="0.08" step="0.005">
+                  <input id="spring-constant-value" class="vis-configuration vis-config-rangeinput" value="0.08"
+                    readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">damping:</div>
-                  <input id="damping" class="vis-configuration vis-config-range" type="range" min="0" max="1" value="0.4"
-                    step="0.01">
+                  <input id="damping" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                    value="0.4" step="0.01">
                   <input id="damping-value" class="vis-configuration vis-config-rangeinput" value="0.4" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">avoidOverlap:</div>
-                  <input id="avoid-overlap" class="vis-configuration vis-config-range" type="range" min="0" max="1" value="0"
-                    step="0.01">
+                  <input id="avoid-overlap" class="vis-configuration vis-config-range" type="range" min="0" max="1"
+                    value="0" step="0.01">
                   <input id="avoid-overlap-value" class="vis-configuration vis-config-rangeinput" value="0" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s2">
-                  <div class="vis-configuration vis-config-label vis-config-s2">maxVelocity:</div> 
-                  <input id="max-velocity" class="vis-configuration vis-config-range" type="range" min="0" max="150" value="50"
-                    step="1">
+                  <div class="vis-configuration vis-config-label vis-config-s2">maxVelocity:</div>
+                  <input id="max-velocity" class="vis-configuration vis-config-range" type="range" min="0" max="150"
+                    value="50" step="1">
                   <input id="max-velocity-value" class="vis-configuration vis-config-rangeinput" value="50" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s2">
                   <div class="vis-configuration vis-config-label vis-config-s2">minVelocity:</div>
-                  <input id="min-velocity" class="vis-configuration vis-config-range" type="range" min="0.01" max="1" value="0.75"
-                    step="0.01">
+                  <input id="min-velocity" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
+                    value="0.75" step="0.01">
                   <input id="min-velocity-value" class="vis-configuration vis-config-rangeinput" value="0.75" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s2">
                   <div class="vis-configuration vis-config-label vis-config-s2">timestep:</div>
-                  <input id="timestep" class="vis-configuration vis-config-range" type="range" min="0.01" max="1" value="0.5"
-                    step="0.01">
+                  <input id="timestep" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
+                    value="0.5" step="0.01">
                   <input id="timestep-value" class="vis-configuration vis-config-rangeinput" value="0.5" readonly>
                 </div>
                 <h3>wind:</h3>
                 <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class=" vis-config-label vis-config-s3">x:</div><input id="x"
-                    class=" vis-config-range" type="range" min="-10" max="10" step="0.1" value="0"><input
-                    id="x-value" class=" vis-config-rangeinput" value="0"  readonly>
+                  <div class=" vis-config-label vis-config-s3">x:</div><input id="x" class=" vis-config-range"
+                    type="range" min="-10" max="10" step="0.1" value="0"><input id="x-value"
+                    class=" vis-config-rangeinput" value="0" readonly>
                 </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class=" vis-config-label vis-config-s3">y:</div><input id="y"
-                    class=" vis-config-range" type="range" min="-10" max="10" step="0.1" value="0"><input
-                    id="y-value" class=" vis-config-rangeinput" value="0"  readonly>
+                  <div class=" vis-config-label vis-config-s3">y:</div><input id="y" class=" vis-config-range"
+                    type="range" min="-10" max="10" step="0.1" value="0"><input id="y-value"
+                    class=" vis-config-rangeinput" value="0" readonly>
                 </div>
               </div>
             </div>
@@ -471,7 +473,7 @@ const drawChart = (data: string) => {
       const exists = module.value.some(
         (item) => item.name === mediate[3] && item.color === mediate[4]
       );
-      if(!exists){
+      if (!exists) {
         const newItem: ColorClass = {
           name: mediate[3], // 提取 mediate[3] 作为 name
           color: mediate[4], // 提取 mediate[4] 作为 color
@@ -479,7 +481,7 @@ const drawChart = (data: string) => {
         module.value.push(newItem)
       }
     });
-    console.log('module:',module.value)
+    console.log('module:', module.value)
     updateNodeColors();
     ElMessage.success('成功绘制聚类图谱~')
   }
@@ -487,8 +489,8 @@ const drawChart = (data: string) => {
 }
 
 //聚类模块
-const total_edges=ref('未生成图表')
-const total_genes=ref('未生成图表')
+const total_edges = ref('未生成图表')
+const total_genes = ref('未生成图表')
 const moduleCluster = async () => {
   //检查fileName是否存在
   if (fileName.value == '未选择文件') {
@@ -506,10 +508,10 @@ const moduleCluster = async () => {
     ElMessage.success('正在绘制聚类图谱~')
     const res: any = await FileApi.moduleCluster(newFilename, uid.value)
     console.log('res:', res)
-    console.log('edges:', res.data.data.ClusterInfo["Total edges"])  
-    total_edges.value=res.data.data.ClusterInfo["Total edges"]
-    console.log('genes  :', res.data.data.ClusterInfo["Total genes"])  
-    total_genes.value=res.data.data.ClusterInfo["Total genes"]
+    console.log('edges:', res.data.data.ClusterInfo["Total edges"])
+    total_edges.value = res.data.data.ClusterInfo["Total edges"]
+    console.log('genes  :', res.data.data.ClusterInfo["Total genes"])
+    total_genes.value = res.data.data.ClusterInfo["Total genes"]
     console.log('getfile:', newFilename_)
     const respone: any = await FileApi.getFile(newFilename_)
     console.log('res:', respone)
@@ -523,12 +525,12 @@ const moduleCluster = async () => {
 }
 //调用模型预测
 const predictMoudle = async () => {
-  try{  
+  try {
     //createGeneMap
     console.log('开始调用模型预测')
     const res = await FileApi.predictMoudle(uid.value)
-    console.log('res:',res)
-  }catch(error){
+    console.log('res:', res)
+  } catch (error) {
     ElMessage.error('调用模型预测失败')
   }finally{
     predicting.value=false
@@ -574,7 +576,7 @@ function updateNodeColors() {
     nodeColorMap[fromNode].push(edge.color.color);
     nodeColorMap[toNode].push(edge.color.color);
   });
-  console.log('nodeColorMap:',nodeColorMap)
+  console.log('nodeColorMap:', nodeColorMap)
   // 更新节点颜色
   Object.keys(nodeColorMap).forEach((nodeId: any) => {
     const colors = nodeColorMap[nodeId];
@@ -645,8 +647,9 @@ window.onload = function () {
           }
 
           // 更新节点位置
-          network.update({ nodes: nodes });
-          console.log('callback:',iteration);
+          // 重新绘制节点位置
+          network.redraw();
+          console.log('callback:', iteration);
         }
       }
     },
@@ -778,7 +781,8 @@ window.onload = function () {
         node.x += windX;
         node.y += windY;
       }
-      network.update({ nodes: nodes }); // 更新节点位置
+      // 重新绘制节点位置
+      network.redraw();
     } else {
       console.error('Some elements are not found');
     }

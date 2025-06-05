@@ -61,15 +61,15 @@
               <!-- 绘制邻接表 -->
               <div class="container_2">
                 <!-- 处理基因文件 -->
-                <el-button class="btn" type="primary" @click="processGene" v-loading="processingGene">基因挑选及图谱分析</el-button>
+                <el-button class="btn" type="primary" @click="processGene"
+                  v-loading="processingGene">基因挑选及图谱分析</el-button>
                 <!-- 获取PFN邻接表 -->
                 <!-- <el-button class="btn" type="primary" @click="getPFNChart"
                   v-loading="gettingPFNChart">PFN推理</el-button> -->
                 <el-button class="btn btn1" type="primary" @click="moduleCluster"
                   v-loading="clustering">子图划分</el-button>
                 <!-- 邻接矩阵转化 -->
-                <el-button class="btn btn1" type="primary" @click="onPredict"
-                  v-loading="predicting">启动ai微服务</el-button>
+                <el-button class="btn btn1" type="primary" @click="onPredict" v-loading="predicting">启动ai微服务</el-button>
               </div>
             </div>
           </div>
@@ -99,9 +99,9 @@
           <div class="node-info-container">
             <h3>Node Information</h3>
             <div class="node-info">
-              <p>Total genes: <span id="node2">{{total_genes}}</span></p>
-              <p>Total edges: <span id="node1">{{total_edges}}</span></p>
-              <p><span id="node1" v-if="CellStage!=-1">共有{{CellStage}}个细胞处于stage 2</span></p>
+              <p>Total genes: <span id="node2">{{ total_genes }}</span></p>
+              <p>Total edges: <span id="node1">{{ total_edges }}</span></p>
+              <p><span id="node1" v-if="CellStage != -1">共有{{ CellStage }}个细胞处于stage 2</span></p>
               <!-- <el-table :data="module" style="width: 100%">
                 <el-table-column prop="name" label="Name" width="180" />
                 <el-table-column prop="color" label="Color" width="180" />
@@ -136,13 +136,6 @@
             <div id="config">
               <div class="vis-configuration-wrapper">
                 <h3>forceAtlas2Based:</h3>
-                <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class="vis-configuration vis-config-label vis-config-s3">theta:</div>
-                  <input id="forceAtlas2Based-theta" class="vis-configuration vis-config-range" type="range" min="0.1"
-                    value="0.1" max="1" step="0.05">
-                  <input id="forceAtlas2Based-theta-value" class="vis-configuration vis-config-rangeinput" value="0.1"
-                    readonly>
-                </div>
                 <div class="vis-configuration vis-config-item vis-config-s3">
                   <div class="vis-configuration vis-config-label vis-config-s3">gravitationalConstant:</div>
                   <input id="gravitational-constant" class="vis-configuration vis-config-range" type="range" min="-500"
@@ -199,17 +192,6 @@
                   <input id="timestep" class="vis-configuration vis-config-range" type="range" min="0.01" max="1"
                     value="0.5" step="0.01">
                   <input id="timestep-value" class="vis-configuration vis-config-rangeinput" value="0.5" readonly>
-                </div>
-                <h3>wind:</h3>
-                <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class=" vis-config-label vis-config-s3">x:</div><input id="x" class=" vis-config-range"
-                    type="range" min="-10" max="10" step="0.1" value="0"><input id="x-value"
-                    class=" vis-config-rangeinput" value="0" readonly>
-                </div>
-                <div class="vis-configuration vis-config-item vis-config-s3">
-                  <div class=" vis-config-label vis-config-s3">y:</div><input id="y" class=" vis-config-range"
-                    type="range" min="-10" max="10" step="0.1" value="0"><input id="y-value"
-                    class=" vis-config-rangeinput" value="0" readonly>
                 </div>
               </div>
             </div>
@@ -347,7 +329,7 @@ const processGene = async () => {
 //获取邻接矩阵
 const onPredict = async () => {
   try {
-    predicting.value=true
+    predicting.value = true
     // //处理M12
     // const res12=await FileApi.selectGene('PPMI-data_M12.csv', uid.value, '1000')
     // console.log('selectGene success,res:', res12)
@@ -378,9 +360,9 @@ const onPredict = async () => {
     //调用模型预测
     console.log('开始调用模型预测')
     const perdict_res = await FileApi.predictMoudle(uid.value)
-    console.log('perdict_res',perdict_res)
-    CellStage.value=perdict_res?.data.data.PredictInfo.ResultDistribution[2]
-    console.log('CellS',CellStage.value)
+    console.log('perdict_res', perdict_res)
+    CellStage.value = perdict_res?.data.data.PredictInfo.ResultDistribution[2]
+    console.log('CellS', CellStage.value)
     ElMessage.success('模型预测成功!')
     progressBar.value = '100'
   } catch (error) {
@@ -532,8 +514,8 @@ const predictMoudle = async () => {
     console.log('res:', res)
   } catch (error) {
     ElMessage.error('调用模型预测失败')
-  }finally{
-    predicting.value=false
+  } finally {
+    predicting.value = false
   }
 }
 // 动态更新节点颜色
@@ -625,8 +607,6 @@ window.onload = function () {
         gravitationalConstant: -31,
         springConstant: 0.08,
         springLength: 100,
-        windX: 0,
-        windY: 0,
       },
       solver: "forceAtlas2Based",
       stabilization: {
@@ -635,22 +615,13 @@ window.onload = function () {
         iterations: 1000,
         onlyDynamicEdges: false,
         updateInterval: 50,
-        callback: function (iteration: number) {
-          const nodes = network.body.nodes;
-          const windX = 2; // 风力在X方向的分量
-          const windY = 2; // 风力在Y方向的分量
+        // callback: function (iteration: number) {
 
-          for (const nodeId in nodes) {
-            const node = nodes[nodeId];
-            node.x += windX;
-            node.y += windY;
-          }
-
-          // 更新节点位置
-          // 重新绘制节点位置
-          network.redraw();
-          console.log('callback:', iteration);
-        }
+        //   // 更新节点位置
+        //   // 重新绘制节点位置
+        //   network.redraw();
+        //   console.log('callback:', iteration);
+        // }
       }
     },
     interaction: {
@@ -708,8 +679,13 @@ window.onload = function () {
     }
   });
 
+  network.on('stabilized', () => {
+    console.log('Stabilization completed');
+    // 在这里执行逻辑，重新绘制节点位置
+    network.redraw();
+  });
+
   const updatePhysicsSettings = () => {
-    const thetaElement = document.getElementById('forceAtlas2Based-theta') as HTMLInputElement | null;
     const gravitationalConstantElement = document.getElementById('gravitational-constant') as HTMLInputElement | null;
     const centralGravityElement = document.getElementById('central-gravity') as HTMLInputElement | null;
     const springLengthElement = document.getElementById('spring-length') as HTMLInputElement | null;
@@ -718,11 +694,10 @@ window.onload = function () {
     const maxVelocityElement = document.getElementById('max-velocity') as HTMLInputElement | null;
     const minVelocityElement = document.getElementById('min-velocity') as HTMLInputElement | null;
     const timestepElement = document.getElementById('timestep') as HTMLInputElement | null;
-    const windXElement = document.getElementById('x') as HTMLInputElement | null;
-    const windYElement = document.getElementById('y') as HTMLInputElement | null;
+    //const windXElement = document.getElementById('x') as HTMLInputElement | null;
+    //const windYElement = document.getElementById('y') as HTMLInputElement | null;
 
     if (
-      thetaElement &&
       gravitationalConstantElement &&
       centralGravityElement &&
       springLengthElement &&
@@ -730,11 +705,10 @@ window.onload = function () {
       dampingElement &&
       maxVelocityElement &&
       minVelocityElement &&
-      timestepElement &&
-      windXElement &&
-      windYElement
+      timestepElement
+      //windXElement &&
+      //windYElement
     ) {
-      const theta = parseFloat(thetaElement.value);
       const gravitationalConstant = parseFloat(gravitationalConstantElement.value);
       const centralGravity = parseFloat(centralGravityElement.value);
       const springLength = parseFloat(springLengthElement.value);
@@ -743,11 +717,10 @@ window.onload = function () {
       const maxVelocity = parseFloat(maxVelocityElement.value);
       const minVelocity = parseFloat(minVelocityElement.value);
       const timestep = parseFloat(timestepElement.value);
-      const windX = parseFloat(windXElement.value);
-      const windY = parseFloat(windYElement.value);
+      //const windX = parseFloat(windXElement.value);
+      //const windY = parseFloat(windYElement.value);
 
       console.log('Updated physics settings:', {
-        theta,
         gravitationalConstant,
         centralGravity,
         springLength,
@@ -756,12 +729,11 @@ window.onload = function () {
         maxVelocity,
         minVelocity,
         timestep,
-        wind: { x: windX, y: windY }
+        //wind: { x: windX, y: windY }
       });
       network.setOptions({
         physics: {
           forceAtlas2Based: {
-            theta: theta,
             gravitationalConstant: gravitationalConstant,
             centralGravity: centralGravity,
             springLength: springLength,
@@ -771,16 +743,8 @@ window.onload = function () {
           maxVelocity: maxVelocity,
           minVelocity: minVelocity,
           timestep: timestep,
-          wind: { x: windX, y: windY } // 添加 wind 设置
         },
       });
-      // 自定义逻辑：更新节点位置以模拟风力效果
-      const nodes = network.body.nodes;
-      for (const nodeId in nodes) {
-        const node = nodes[nodeId];
-        node.x += windX;
-        node.y += windY;
-      }
       // 重新绘制节点位置
       network.redraw();
     } else {
@@ -842,9 +806,9 @@ const clearConsole = () => {
   console.log('Console cleared.'); // 在控制台输出清除日志的提示
 };
 //生成随机uid
-const creRanStr=()=>{
-  let ran_num=Math.floor(Math.random()*100);
-  return (''+ran_num)
+const creRanStr = () => {
+  let ran_num = Math.floor(Math.random() * 100);
+  return ('' + ran_num)
 }
 onMounted(() => {
   //自动连接SSE
